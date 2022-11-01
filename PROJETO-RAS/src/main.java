@@ -12,7 +12,7 @@ public class main{
         menu.run();
 
         // Fechar a base de dados
-        bd.close();
+      //  bd.close();
 
         System.out.println("Obrigado por utilizar o RasBet!");
 

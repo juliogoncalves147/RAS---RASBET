@@ -1,5 +1,7 @@
 package Entidades;
 
+import java.util.Date;
+
 public class Apostador extends Utilizador{
     private double saldo;
 

@@ -13,7 +13,7 @@ public class Utilizador {
     private String numeroidcivil;
 
 
-    public Apostador(String nome, String nomeutilizador, String email, String password, boolean isLogged, Date dataNascimento, String numeroidfical, String numeroidcivil) {
+    public Utilizador(String nome, String nomeutilizador, String email, String password, boolean isLogged, Date dataNascimento, String numeroidfical, String numeroidcivil) {
         this.nome = nome;
         this.nomeutilizador = nomeutilizador;
         this.email = email;
