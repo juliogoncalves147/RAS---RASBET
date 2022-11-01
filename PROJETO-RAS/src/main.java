@@ -1,3 +1,5 @@
+import java.io.Serializable;
+
 public class main{
     public static void main(String[] args) {
         System.out.println("Bem vindos ao RasBet!");
@@ -14,6 +16,5 @@ public class main{
 
         System.out.println("Obrigado por utilizar o RasBet!");
 
-        
     }
 }
