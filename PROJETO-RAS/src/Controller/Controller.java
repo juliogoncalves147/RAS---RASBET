@@ -83,8 +83,7 @@ public class Controller {
     }
 
     private Date stringToDate(String s) throws ParseException {
-        Date date = new SimpleDateFormat("dd/MM/yyyy").parse(s);
-        return date;
+        return new SimpleDateFormat("dd/MM/yyyy").parse(s);
     }
 
     private boolean registar() {

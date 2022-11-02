@@ -29,36 +29,24 @@ public class ControllerApostador extends Controller {
             switch (opcao) {
                 case 1:
                     this.getJogos();
-                    //Selecionar desporto e depois selecionar equipa. Caso queira voltar, escrever 0.
                     break;
-                /*case 2:
-                    this.view.line("Insira o valor a depositar: ");
-                    double valor = this.scan.nextDouble();
-                    ((Apostador) this.user).depositar(valor);
-                    this.db.update("UPDATE User SET saldo = " + this.user.getSaldo() +
-                            " WHERE id = '" + this.user.getId() + "'");
+               case 2:
+                   //altera informações do perfil
+
                     break;
                 case 3:
-                    this.view.line("Insira o valor a levantar: ");
-                    valor = this.scan.nextDouble();
-                    ((Apostador) this.user).levantar(valor);
-                    this.db.update("UPDATE User SET saldo = " + this.user.getSaldo() +
-                            " WHERE id = '" + this.user.getId() + "'");
+                    //historico de transações
                     break;
                 case 4:
-                    this.view.line("Insira o valor a apostar: ");
-                    valor = this.scan.nextDouble();
-                    this.view.line("Insira o id do evento: ");
-                    String idEvento = this.scan.next();
-                    this.view.line("Insira o id da equipa: ");
-                    String idEquipa = this.scan.next();
-                    ((Apostador) this.user).apostar(valor, idEvento, idEquipa);
-                    this.db.update("UPDATE User SET saldo = " + this.user.getSaldo() +
-                            " WHERE id = '" + this.user.getId() + "'");
+                    //historico de apostas
                     break;
                 case 5:
-                    this.view.line("A sair...");
-                    break;*/
+                    //depositar dinheiro
+                    break;
+                case 6:
+                    //levantar dinheiro
+                    break;
+
                 default:
                     this.view.line("Opção inválida!");
                     break;
@@ -108,7 +96,7 @@ public class ControllerApostador extends Controller {
         ArrayList<String> jogosString = new ArrayList<>();
 
         for (int i = 0; i < jogos.size(); i++) {
-            jogosString.add(i+1 + " - " + jogos.get(i).toString());
+            jogosString.add(i + 1 + " - " + jogos.get(i).toString());
         }
 
         jogosString.add("0 - Voltar");
@@ -116,31 +104,26 @@ public class ControllerApostador extends Controller {
 
         this.view.line("Insira o id do jogo: ");
         opcao = this.scanOption(0, jogos.size());
-        switch (opcao) {
-            case 0:
-                return;
-            default:
-                this.view.line("Insira o prognóstico: ");
-                String prognostico = this.scan.next();
+        if (opcao != 0) {
+            this.view.line("Insira o prognóstico: ");
+            String prognostico = this.scan.next();
 
-                this.view.line("Insira o valor a apostar: ");
-                double valor = this.scan.nextDouble();
+            this.view.line("Insira o valor a apostar: ");
+            double valor = this.scan.nextDouble();
 
-                Jogo jogo = jogos.get(opcao);
-                if (jogo.getEstado() == EstadoJogo.ABERTO) {
-                    if (this.user.levantar(valor)) {
-                        this.db.update("UPDATE User SET saldo = " + this.user.getSaldo() +
-                                " WHERE id = '" + this.user.getNomeutilizador() + "'");
-                        this.db.update("INSERT INTO Apostas (idJogo, idApostador, prognostico, valor) VALUES ('" +
-                                jogo.getId() + "', '" + this.user.getNomeutilizador() + "', '" + prognostico + "', " + valor + ")");
-                    } else {
-                        this.view.line("Saldo insuficiente!");
-                    }
-                    break;
+            Jogo jogo = jogos.get(opcao-1);
+            if (jogo.getEstado() == EstadoJogo.ABERTO) {
+                if (this.user.levantar(valor)) {
+                    this.db.update("UPDATE User SET saldo = " + this.user.getSaldo() +
+                            " WHERE id = '" + this.user.getNomeutilizador() + "'");
+                    this.db.update("INSERT INTO Apostas (idJogo, idApostador, prognostico, valor) VALUES ('" +
+                            jogo.getId() + "', '" + this.user.getNomeutilizador() + "', '" + prognostico + "', " + valor + ")");
                 } else {
-                    this.view.line("Não é possível apostar neste jogo!");
-                    break;
+                    this.view.line("Saldo insuficiente!");
                 }
+            } else {
+                this.view.line("Não é possível apostar neste jogo!");
+            }
         }
     }
 }

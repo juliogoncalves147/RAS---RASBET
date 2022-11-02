@@ -2,11 +2,7 @@ package Controller;
 
 import Model.Administrador;
 import Model.Apostador;
-import Model.BaseDados;
-import Model.Utilizador;
-import View.Menu;
 
-import java.util.Scanner;
 
 public class ControllerAdmin extends Controller {
     private Administrador user;
@@ -15,9 +11,9 @@ public class ControllerAdmin extends Controller {
     }
 
     public void run() {
-        int opcao = 0;
-        /*while (opcao != 5) {
-            this.view.menuAdmin();
+        /*int opcao = 0;
+        while (opcao != 5) {
+            //this.view.menuAdmin();
             opcao = this.scan.nextInt();
             switch (opcao) {
                 case 1:
