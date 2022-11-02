@@ -12,18 +12,18 @@ import java.util.Scanner;
 
 
 public class Controller {
-    BaseDados db;
-    Menu view;
-    Scanner scan;
-    public Controller(){
+    private BaseDados db;
+    private RasBetModel model;
+    private Menu view;
+    private Scanner scan;
+    public Controller() {
         this.db = new BaseDados();
+        this.model = new RasBetModel();
         this.view = new Menu();
         this.scan = new Scanner(System.in);
     }
 
-    public void connect(){
-
-    }
+   
 
 
     private Utilizador login() {

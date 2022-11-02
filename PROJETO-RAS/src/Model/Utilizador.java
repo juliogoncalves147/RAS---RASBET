@@ -24,6 +24,17 @@ public class Utilizador {
         this.numeroidcivil = numeroidcivil;
     }
 
+    public Utilizador(){
+        this.nome = "";
+        this.nomeutilizador = "";
+        this.email = "";
+        this.password = "";
+        this.isLogged = false;
+        this.dataNascimento = new Date();
+        this.numeroidfiscal = "";
+        this.numeroidcivil = "";
+    }
+
     public String getNome() {
         return nome;
     }
