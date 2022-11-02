@@ -1,4 +1,4 @@
-package Entidades;
+package Model;
 
 import java.util.Date;
 
@@ -16,5 +16,17 @@ public class Apostador extends Utilizador{
 
     public void setSaldo(double saldo) {
         this.saldo = saldo;
+    }
+
+    public void depositar(double valor){
+        this.saldo += valor;
+    }
+
+    public boolean levantar(double valor) {
+        if (valor <= this.saldo) {
+            this.saldo -= valor;
+            return true;
+        }
+        return false;
     }
 }

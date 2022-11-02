@@ -1,20 +1,18 @@
-import java.io.Serializable;
+import Controller.Controller;
+import Model.EstadoJogo;
+import Model.Jogo;
+
+import javax.swing.plaf.synth.Region;
+import java.util.Locale;
 
 public class main{
     public static void main(String[] args) {
-        System.out.println("Bem vindos ao RasBet!");
 
-        // Inicializar a base de dados
-        BaseDados bd = new BaseDados();
 
-        // Inicializar o menu
-        Menu menu = new Menu(bd);
-        menu.run();
 
-        // Fechar a base de dados
-      //  bd.close();
+        Controller c = new Controller();
+        c.run();
 
-        System.out.println("Obrigado por utilizar o RasBet!");
-
+        System.out.println("\n\nObrigado por utilizar o RasBet!");
     }
 }

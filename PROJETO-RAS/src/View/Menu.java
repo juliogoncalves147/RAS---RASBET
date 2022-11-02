@@ -1,16 +1,11 @@
+package View;
+
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 public class Menu implements Serializable {
-    private BaseDados bd;
-    public Menu(BaseDados bd) {
-        this.bd = bd;
-    }
 
     public void optionsMenu(String[] options) {
-        StringBuilder sb = new StringBuilder("|");
+        /*StringBuilder sb = new StringBuilder("|");
         int length = 0;
         for (String str : options) length += str.length();
         int spaces = (200 - length) / (options.length + 1);
@@ -18,6 +13,9 @@ public class Menu implements Serializable {
         space.append(" ".repeat(Math.max(0, spaces)));
         for (String option : options) sb.append(space).append(option);
         sb.append(space).append(" ".repeat(((200 - length) % ((options.length) + 1)))).append("|\n|").append("*".repeat(200)).append("|");
+        System.out.println(sb);*/
+        StringBuilder sb = new StringBuilder("");
+        for(String option : options) sb.append(">> ").append(option).append("\n");
         System.out.println(sb);
     }
 
@@ -53,17 +51,14 @@ public class Menu implements Serializable {
         System.out.println(generic);
     }
 
-    public Menu clone() {
-        return new Menu(this.bd);
-    }
-
     public void mainMenu() {
+        subheader("Bem-vindo ao RASBET!","Utilizador não logado");
         optionsMenu(new String[]{"1 - Registar", "2 - Iniciar Sessão", "0 - Sair"});
         line("Pretende: ");
     }
 
     public void TecnicoMainMenu(String username) {
-        subheader("Menu principal", username);
+        subheader("View.Menu principal", username);
         optionsMenu(new String[]{"1 - Consultar Jogos",
                 "2 - Responder a pedidos",
                 "0 - Terminar Sessão"});
@@ -80,7 +75,7 @@ public class Menu implements Serializable {
     }
 
     public void apostadorMainMenu(String username) {
-        subheader("Menu principal", username);
+        subheader("View.Menu principal", username);
         optionsMenu(new String[]{"1 - Consultar Jogos",
                 "2 - Alterar Informações de Perfil",
                 "3 - Consultar Histórico de Transações",
@@ -96,15 +91,11 @@ public class Menu implements Serializable {
     }
 
     public void adminMainMenu(String username) {
-        subheader("Menu principal", username);
+        subheader("View.Menu principal", username);
         optionsMenu(new String[]{"1 - Consultar Jogos",
                 "2 - Criar Promoções",
                 "3 - Enviar notificações",
                 "0 - Terminar Sessão"});
         line("Pretende: ");
-    }
-
-    public void run() {
-
     }
 }

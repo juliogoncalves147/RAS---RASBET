@@ -1,4 +1,4 @@
-package Entidades;
+package Model;
 
 import java.util.*;
 
@@ -9,18 +9,18 @@ public class Utilizador {
     private String password;
     private boolean isLogged;
     private Date dataNascimento;
-    private String numeroidfical;
+    private String numeroidfiscal;
     private String numeroidcivil;
 
 
-    public Utilizador(String nome, String nomeutilizador, String email, String password, boolean isLogged, Date dataNascimento, String numeroidfical, String numeroidcivil) {
+    public Utilizador(String nome, String nomeutilizador, String email, String password, boolean isLogged, Date dataNascimento, String numeroidfiscal, String numeroidcivil) {
         this.nome = nome;
         this.nomeutilizador = nomeutilizador;
         this.email = email;
         this.password = password;
         this.isLogged = isLogged;
         this.dataNascimento = dataNascimento;
-        this.numeroidfical = numeroidfical;
+        this.numeroidfiscal = numeroidfiscal;
         this.numeroidcivil = numeroidcivil;
     }
 
@@ -74,12 +74,12 @@ public class Utilizador {
         this.dataNascimento = dataNascimento;
     }
 
-    public String getNumeroidfical() {
-        return numeroidfical;
+    public String getNumeroidfiscal() {
+        return numeroidfiscal;
     }
 
     public void setNumeroidfical(String numeroidfical) {
-        this.numeroidfical = numeroidfical;
+        this.numeroidfiscal = numeroidfical;
     }
 
     public String getNumeroidcivil() {
@@ -107,7 +107,7 @@ public class Utilizador {
                 ", password='" + password + '\'' +
                 ", isLogged=" + isLogged +
                 ", dataNascimento=" + dataNascimento +
-                ", numeroidfical='" + numeroidfical + '\'' +
+                ", numeroidfical='" + numeroidfiscal + '\'' +
                 ", numeroidcivil='" + numeroidcivil + '\'' +
                 '}';
     }

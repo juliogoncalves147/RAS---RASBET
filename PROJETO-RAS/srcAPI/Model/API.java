@@ -1,4 +1,6 @@
-import Entidades.Jogo;
+package Model;
+
+import Model.Jogo;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -6,22 +8,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.nio.charset.Charset;
 import java.util.List;
-import java.util.Map;
 
 
 public class API {
@@ -90,7 +78,7 @@ public class API {
         HttpRequest request = HttpRequest.newBuilder().uri(URI.create("http://ucras.di.uminho.pt/v1/games/")).build();
         client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
                 .thenApply(HttpResponse::body)
-                .thenAccept(API::StringtoJson)
+                .thenAccept(Model.API::StringtoJson)
                 .join();
          */
     }
