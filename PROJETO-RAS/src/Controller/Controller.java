@@ -6,13 +6,11 @@ import View.Menu;
 import java.sql.ResultSet;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.util.*;
 
 
 public class Controller {
-    private String currency;
+    String currency;
     BaseDados db;
     private RasBetModel model;
     Menu view;
@@ -168,6 +166,56 @@ public class Controller {
             case 0:
                 break;
         }
+    }
+
+    public List<Jogo> getJogos() {
+        ResultSet sports = this.db.query("SELECT desporto FROM Desporto");
+        List<String> desportos = new ArrayList<>();
+        try {
+            for (int i = 1; sports.next(); i++) {
+                desportos.add(i + " - " + sports.getString("desporto"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        desportos.add("0 - Voltar");
+        this.view.optionsMenu(desportos.toArray(new String[0]));
+
+        this.view.line("Insira o id do desporto: ");
+        int opcao = this.scan.nextInt();
+        List<Jogo> jogos = new ArrayList<>();
+
+        if (opcao == 0) return jogos;
+
+        ResultSet rs = this.db.query("SELECT * FROM Jogo WHERE desporto = '" +
+                desportos.get(opcao - 1).split(" - ")[1] + "'" + "AND estado = 0 OR estado = 1");
+
+        try {
+            while (rs.next())
+                jogos.add(new Jogo(rs.getString("id"), EstadoJogo.values()[rs.getInt("estado")],
+                        rs.getDate("data"), null));
+
+            for (Jogo j : jogos) {
+                ResultSet odds = this.db.query("SELECT * FROM Odds WHERE idJogo = '" + j.getId() + "'");
+                LinkedHashMap<String, Double> oddsMap = new LinkedHashMap<>();
+                while (odds != null && odds.next()) {
+                    oddsMap.put(odds.getString("prognostico"), odds.getDouble("valor"));
+                }
+                j.setOdds(oddsMap);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        ArrayList<String> jogosString = new ArrayList<>();
+
+        for (int i = 0; i < jogos.size(); i++) {
+            jogosString.add(i + 1 + " - " + jogos.get(i).toString());
+        }
+
+        jogosString.add("0 - Voltar");
+        this.view.optionsMenu(jogosString.toArray(new String[0]));
+        return jogos;
     }
 
     public BaseDados getDb() {
