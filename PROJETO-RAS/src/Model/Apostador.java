@@ -10,6 +10,11 @@ public class Apostador extends Utilizador{
         this.saldo = saldo;
     }
 
+    public Apostador(){
+        super();
+        this.saldo = 0;
+    }
+
     public double getSaldo() {
         return saldo;
     }
