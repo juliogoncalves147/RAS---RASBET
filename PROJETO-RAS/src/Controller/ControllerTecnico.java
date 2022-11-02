@@ -10,8 +10,11 @@ import java.util.Scanner;
 
 public class ControllerTecnico extends Controller {
     private Tecnico user;
-    public ControllerTecnico(Tecnico user){
+    public ControllerTecnico(Tecnico user, Controller controller) {
         this.user = user;
+        this.view = controller.getView();
+        this.scan = controller.getScan();
+        this.db = controller.getDb();
     }
 
     public void run() {

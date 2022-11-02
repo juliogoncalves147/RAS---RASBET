@@ -12,15 +12,17 @@ import java.util.Scanner;
 
 
 public class Controller {
-    private BaseDados db;
+    private String currency;
+    BaseDados db;
     private RasBetModel model;
-    private Menu view;
-    private Scanner scan;
+    Menu view;
+    Scanner scan;
     public Controller() {
         this.db = new BaseDados();
         this.model = new RasBetModel();
         this.view = new Menu();
         this.scan = new Scanner(System.in);
+        this.currency = "€";
     }
 
    
@@ -154,14 +156,14 @@ public class Controller {
                     if (user instanceof Apostador)
                         new ControllerApostador((Apostador) user, this).run();
                     else if (user instanceof Tecnico)
-                        new ControllerTecnico((Tecnico) user).run();
+                        new ControllerTecnico((Tecnico) user, this).run();
                     else if (user instanceof Especialista)
-                        new ControllerEspecialista((Especialista) user).run();
+                        new ControllerEspecialista((Especialista) user, this).run();
                     else if (user instanceof Administrador)
-                        new ControllerAdmin((Administrador) user).run();
+                        new ControllerAdmin((Administrador) user, this).run();
                 }
                 else this.run();
-                this.connect(); //as promocoes/desportos são inicializados
+                //this.connect(); //as promocoes/desportos são inicializados
                 break;
             case 0:
                 break;

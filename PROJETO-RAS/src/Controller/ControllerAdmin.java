@@ -1,16 +1,20 @@
 package Controller;
 
 import Model.Administrador;
+import Model.Apostador;
 
 
 public class ControllerAdmin extends Controller {
     private Administrador user;
-    public ControllerAdmin(Administrador user){
+    public ControllerAdmin(Administrador user, Controller controller) {
         this.user = user;
+        this.view = controller.getView();
+        this.scan = controller.getScan();
+        this.db = controller.getDb();
     }
 
     public void run() {
-       /*  int opcao = 0;
+        int opcao = 0;
         while (opcao != 5) {
             this.view.menuAdmin();
             opcao = this.scan.nextInt();

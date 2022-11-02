@@ -10,8 +10,11 @@ import java.util.Scanner;
 
 public class ControllerEspecialista extends Controller {
     private Especialista user;
-    public ControllerEspecialista(Especialista user){
+    public ControllerEspecialista(Especialista user, Controller controller) {
         this.user = user;
+        this.view = controller.getView();
+        this.scan = controller.getScan();
+        this.db = controller.getDb();
     }
 
     public void run() {
