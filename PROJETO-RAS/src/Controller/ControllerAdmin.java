@@ -13,88 +13,59 @@ public class ControllerAdmin extends Controller {
         this.db = controller.getDb();
     }
 
+
     public void run() {
         int opcao = 0;
         while (opcao != 5) {
-            this.view.menuAdmin();
+            this.view.adminMainMenu(this.user.getNomeutilizador());
             opcao = this.scan.nextInt();
             switch (opcao) {
-                case 1:
-                    this.view.line("Saldo: " + ((Apostador) this.user).getSaldo());
+                case 1: //alterar estado de apostas
+                    this.getJogos();
+                    this.view.line("Escolha um jogo" + this.getJogos());
+                    String jogo = this.scan.nextLine();
+                    this.view.line("Deseja ativar, suspender ou fechar a aposta?");
+                    String estado = this.scan.nextLine();
+                    this.alterarEstadoApostas(estado, jogo);
                     break;
-                case 2:
-                    this.view.line("Insira o valor a depositar: ");
-                    double valor = this.scan.nextDouble();
-                    ((Apostador) this.user).depositar(valor);
-                    this.db.update("UPDATE User SET saldo = " + ((Apostador) this.user).getSaldo() +
-                            " WHERE id = '" + this.user.getId() + "'");
+                case 2: //criar promocao
+                    this.view.line("Selecione o jogo para a promoção: " + this.getJogos());
+                    String jogo = this.scan.nextLine();
+                    this.view.line("Insira a promoção desejada: ");
+                    String promo = this.scan.nextLine();
+                    if(this.isPromocaoValida(promo)){
+                        
+                        this.view.line("Deseja enviar notificação?");
+                        Boolean notificacaobool = this.scan.nextBoolean();
+                        
+                        
+                        if(notificacaobool){
+                            this.view.line("Para quem deseja enviar a notificação?");
+                            String destinatarios = this.scan.nextLine();
+                            this.view.line("Insira a notificação desejada: ");
+                            String notificacao = this.scan.nextLine();
+                            this.enviarNotificacoes(notificacao,destinatarios);
+                            this.criarPromocao(promo, jogo);
+                        }
+                    }
+                    else{
+                        this.view.line("Promoção inválida");
+                    }
+
+
                     break;
-                case 3:
-                    this.view.line("Insira o valor a levantar: ");
-                    valor = this.scan.nextDouble();
-                    ((Apostador) this.user).levantar(valor);
-                    this.db.update("UPDATE User SET saldo = " + ((Apostador) this.user).getSaldo() +
-                            " WHERE id = '" + this.user.getId() + "'");
+                case 3: //enviar notificacoes
+                    this.view.line("Para quem deseja enviar a notificação?");
+                    String destinatarios = this.scan.nextLine();
+                    this.view.line("Insira a notificação desejada: ");
+                    String notificacao = this.scan.nextLine();
+                    this.enviarNotificacoes(notificacao,destinatarios);
                     break;
-                case 4:
-                    this.view.line("Insira o valor a apostar: ");
-                    valor = this.scan.nextDouble();
-                    this.view.line("Insira o id do evento: ");
-                    String idEvento = this.scan.next();
-                    this.view.line("Insira o id da equipa: ");
-                    String idEquipa = this.scan.next();
-                    ((Apostador) this.user).apostar(valor, idEvento, idEquipa);
-                    this.db.update("UPDATE User SET saldo = " + ((Apostador) this.user).getSaldo() +
-                            " WHERE id = '" + this.user.getId() + "'");
-                    break;
-                case 5:
-                    this.view.line("A sair...");
-                    break;
+
                 default:
                     this.view.line("Opção inválida!");
             }
         }
     }
-        int opcao = 0;
-        while (opcao != 5) {
-            this.view.menuAdmin();
-            opcao = this.scan.nextInt();
-            switch (opcao) {
-                case 1:
-                    this.view.line("Saldo: " + ((Apostador) this.user).getSaldo());
-                    break;
-                case 2:
-                    this.view.line("Insira o valor a depositar: ");
-                    double valor = this.scan.nextDouble();
-                    ((Apostador) this.user).depositar(valor);
-                    this.db.update("UPDATE User SET saldo = " + ((Apostador) this.user).getSaldo() +
-                            " WHERE id = '" + this.user.getId() + "'");
-                    break;
-                case 3:
-                    this.view.line("Insira o valor a levantar: ");
-                    valor = this.scan.nextDouble();
-                    ((Apostador) this.user).levantar(valor);
-                    this.db.update("UPDATE User SET saldo = " + ((Apostador) this.user).getSaldo() +
-                            " WHERE id = '" + this.user.getId() + "'");
-                    break;
-                case 4:
-                    this.view.line("Insira o valor a apostar: ");
-                    valor = this.scan.nextDouble();
-                    this.view.line("Insira o id do evento: ");
-                    String idEvento = this.scan.next();
-                    this.view.line("Insira o id da equipa: ");
-                    String idEquipa = this.scan.next();
-                    ((Apostador) this.user).apostar(valor, idEvento, idEquipa);
-                    this.db.update("UPDATE User SET saldo = " + ((Apostador) this.user).getSaldo() +
-                            " WHERE id = '" + this.user.getId() + "'");
-                    break;
-                case 5:
-                    this.view.line("A sair...");
-                    break;
-                default:
-                    this.view.line("Opção inválida!");
-                    break;
-            }
-        }*/
     }
-}
+

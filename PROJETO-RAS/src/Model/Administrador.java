@@ -21,7 +21,7 @@ public class Administrador extends Utilizador implements IAdministradorFacade {
     @Override
     public void alterarEstadoApostas(String estado, int idAposta) {
       
-                    
+        
         
     }
 

@@ -17,46 +17,35 @@ public class ControllerEspecialista extends Controller {
         this.db = controller.getDb();
     }
 
+
+
+  
     public void run() {
         int opcao = 0;
-        /*while (opcao != 5) {
-            this.view.menuEspecialista();
+        while (opcao != 5) {
+            this.view.especialistaMainMenu(this.user.getNomeutilizador());
             opcao = this.scan.nextInt();
             switch (opcao) {
-                case 1:
-                    this.view.line("Saldo: " + ((Apostador) this.user).getSaldo());
+                case 1://consultar jogos
+                this.getJogos();
                     break;
-                case 2:
+                case 2://inserir odd
                     this.view.line("Insira o valor a depositar: ");
                     double valor = this.scan.nextDouble();
                     ((Apostador) this.user).depositar(valor);
                     this.db.update("UPDATE User SET saldo = " + ((Apostador) this.user).getSaldo() +
                             " WHERE id = '" + this.user.getId() + "'");
                     break;
-                case 3:
+                case 3: //atualizar odd
                     this.view.line("Insira o valor a levantar: ");
                     valor = this.scan.nextDouble();
                     ((Apostador) this.user).levantar(valor);
                     this.db.update("UPDATE User SET saldo = " + ((Apostador) this.user).getSaldo() +
                             " WHERE id = '" + this.user.getId() + "'");
                     break;
-                case 4:
-                    this.view.line("Insira o valor a apostar: ");
-                    valor = this.scan.nextDouble();
-                    this.view.line("Insira o id do evento: ");
-                    String idEvento = this.scan.next();
-                    this.view.line("Insira o id da equipa: ");
-                    String idEquipa = this.scan.next();
-                    ((Apostador) this.user).apostar(valor, idEvento, idEquipa);
-                    this.db.update("UPDATE User SET saldo = " + ((Apostador) this.user).getSaldo() +
-                            " WHERE id = '" + this.user.getId() + "'");
-                    break;
-                case 5:
-                    this.view.line("A sair...");
-                    break;
                 default:
                     this.view.line("Opção inválida!");
             }
-        }*/
+        }
     }
 }
