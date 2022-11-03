@@ -8,6 +8,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import Entidades.PedidoAjuda;
+
 
 public class Controller {
     String currency;
@@ -216,6 +218,22 @@ public class Controller {
         jogosString.add("0 - Voltar");
         this.view.optionsMenu(jogosString.toArray(new String[0]));
         return jogos;
+    }
+
+    public List<PedidoAjuda> getPedidos(){
+        ResultSet rs = this.db.query("SELECT * FROM PedidoAjuda WHERE estado = 0");
+        List<PedidoAjuda> pedidos = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                pedidos.add(new PedidoAjuda(rs.getString("id"), rs.getString("userApostador"),
+                        rs.getString("userTecnico"), rs.getString("texto"), rs.getString("resposta"),
+                        EstadoPedido.values()[rs.getInt("estado")]));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return pedidos;
+
     }
 
     public void enviarNotificacoes(String notificacao, String destinatarios) {
