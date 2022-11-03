@@ -27,14 +27,10 @@ import java.sql.*;
 import java.util.Date;
 
 public class API {
-
     private static HttpURLConnection connection;
 
-
-
     private static void updateSQL(List<Jogo> jogos) throws SQLException {
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/RASBET", "root", "root");
-
+        Connection conn = DriverManager.getConnection("jdbc:mysql://34.175.91.230:3306/projeto_ras", "root", "rasbet");
 
         for (Jogo jogo : jogos) {
             String id = jogo.getId();
@@ -47,7 +43,7 @@ public class API {
             preparedStmt.setString (1, id);
             preparedStmt.setString (2, formatada);
             preparedStmt.setInt   (3, estado);
-            preparedStmt.executeUpdate();
+            preparedStmt.execute();
 
             Bookmaker bookmaker = jogo.getBookmakers().get(0);
             String homeTeam =  bookmaker.getMarkets().get(0).getOutcomes().get(1).getName();
@@ -57,18 +53,32 @@ public class API {
             int awayOdd = bookmaker.getMarkets().get(0).getOutcomes().get(0).getPrice();
             int drawOdd = bookmaker.getMarkets().get(0).getOutcomes().get(2).getPrice();
             // Alterar esta query para inserir os odds direitas
-            String query2 = "insert ignore into Odds values ( ? , 'Futebol', ? ,  ? );";
+            String query2 = "insert ignore into Odds (idJogo, prognostico, valor) values (?, ? ,  ? ) on duplicate key update valor = ?;";
             preparedStmt = conn.prepareStatement(query2);
             preparedStmt.setString (1, id);
-            preparedStmt.setString (2, formatada);
-            preparedStmt.setInt   (3, estado);
+            preparedStmt.setString (2, homeTeam);
+            preparedStmt.setInt   (3, homeOdd);
+            preparedStmt.setInt(4, homeOdd);
+            preparedStmt.executeUpdate();
+
+            String query3 = "insert ignore into Odds (idJogo, prognostico, valor) values (?, ? ,  ? ) on duplicate key update valor = ?;";
+            preparedStmt = conn.prepareStatement(query3);
+            preparedStmt.setString (1, id);
+            preparedStmt.setString (2, awayTeam);
+            preparedStmt.setInt   (3, awayOdd);
+            preparedStmt.setInt   (4, awayOdd);
+            preparedStmt.executeUpdate();
+
+            String query4 =  "insert ignore into Odds (idJogo, prognostico, valor) values (?, ? ,  ? ) on duplicate key update valor = ?;";
+            preparedStmt = conn.prepareStatement(query4);
+            preparedStmt.setString (1, id);
+            preparedStmt.setString (2, draw);
+            preparedStmt.setInt   (3, drawOdd);
+            preparedStmt.setInt   (4, drawOdd);
             preparedStmt.executeUpdate();
         }
-
         conn.close();
     }
-
-
 
     private static void StringtoJson(String json) throws JsonProcessingException, SQLException {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -81,11 +91,7 @@ public class API {
         updateSQL(listJogo);
     }
 
-
-
     public static void main(String[] args) throws JsonProcessingException, SQLException {
-        // Método 1
-
 
         TimerTask task = new TimerTask() {
             @Override
@@ -133,28 +139,5 @@ public class API {
         long delay = 120000L;
 
         timer.scheduleAtFixedRate(task, 0,  delay);
-
-
-        /*
-        // Método 2
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create("http://ucras.di.uminho.pt/v1/games/")).build();
-        client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-                .thenApply(HttpResponse::body)
-                .thenAccept(Model.API::StringtoJson)
-                .join();
-         */
     }
-
-        /*
-        public static String parse(String responseBody){
-            JSONArray albums = new JSONArray(responseBody);
-            for(int i = 0; i < albums.length(); i++) {
-                JSONObject album = albums.getJSONObject(i);
-                String id = album.getString("id");
-                System.out.println(id + " \n");
-            }
-            return null;
-        }*/
-
 }
