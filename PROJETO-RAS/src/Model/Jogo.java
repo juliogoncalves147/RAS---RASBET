@@ -21,7 +21,6 @@ public class Jogo {
     }
 
     public LinkedHashMap<String, Double> getOdds() {
-
         return odds;
     }
 

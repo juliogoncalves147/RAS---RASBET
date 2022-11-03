@@ -1,4 +1,4 @@
-package Entidades;
+package Model;
 
 import Model.EstadoPedido;
 

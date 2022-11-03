@@ -8,18 +8,16 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import Entidades.PedidoAjuda;
+import Model.PedidoAjuda;
 
 
 public class Controller {
     String currency;
     BaseDados db;
-    private RasBetModel model;
     Menu view;
     Scanner scan;
     public Controller() {
         this.db = new BaseDados();
-        this.model = new RasBetModel();
         this.view = new Menu();
         this.scan = new Scanner(System.in);
         this.currency = "€";

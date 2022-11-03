@@ -17,9 +17,6 @@ public class ControllerEspecialista extends Controller {
         this.db = controller.getDb();
     }
 
-
-
-  
     public void run() {/*
         int opcao = 0;
         while (opcao != 5) {

@@ -4,7 +4,7 @@ package Model;
 import java.util.*;
 
 
-public class Tecnico extends Utilizador implements ITecnicoFacade {
+public class Tecnico extends Utilizador{
     private boolean aTrabalhar;
 
     public Tecnico(String nome, String nomeutilizador, String email, String password, boolean isLogged, Date dataNascimento, String numeroidfical, String numeroidcivil, Boolean aTrabalhar) {
@@ -16,7 +16,6 @@ public class Tecnico extends Utilizador implements ITecnicoFacade {
         return aTrabalhar;
     }
 
-    @Override
     public void responderPedido(String resposta, int idPedido) {
         // TODO Auto-generated method stub
         

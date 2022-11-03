@@ -1,4 +1,4 @@
-package Entidades;
+package Model;
 
 public class Notificacao {
     private String id;

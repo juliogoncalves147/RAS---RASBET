@@ -2,7 +2,7 @@ package Model;
 
 import java.util.*;
 
-public class Administrador extends Utilizador implements IAdministradorFacade {
+public class Administrador extends Utilizador{
     private boolean aTrabalhar;
 
     public Administrador(String nome, String nomeutilizador, String email, String password, boolean isLogged, Date dataNascimento, String numeroidfical, String numeroidcivil, boolean aTrabalhar) {
@@ -18,20 +18,14 @@ public class Administrador extends Utilizador implements IAdministradorFacade {
         this.aTrabalhar = aTrabalhar;
     }
 
-    @Override
     public void alterarEstadoApostas(String estado, int idAposta) {
-      
-        
-        
-    }
 
-    @Override
+    }
     public void criarPromocao(String texto, String tipo, String dataInicio, String dataFim, String valor) {
         // TODO Auto-generated method stub
         
     }
 
-    @Override
     public void enviarNotificacoes(String texto, String destinatarios) {
         // TODO Auto-generated method stub
         

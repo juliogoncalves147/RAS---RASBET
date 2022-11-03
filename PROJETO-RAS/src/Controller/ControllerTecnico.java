@@ -1,14 +1,9 @@
 package Controller;
 
-import Entidades.PedidoAjuda;
-import Model.Apostador;
-import Model.BaseDados;
+import Model.PedidoAjuda;
 import Model.Tecnico;
-import Model.Utilizador;
-import View.Menu;
-import java.util.*;
 
-import java.util.Scanner;
+import java.util.*;
 
 public class ControllerTecnico extends Controller {
     private Tecnico user;
