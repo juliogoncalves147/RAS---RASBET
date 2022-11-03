@@ -1,22 +1,27 @@
 package Entidades;
 
+import Model.EstadoPedido;
+
 import java.util.Date;
 
 public class PedidoAjuda {
     private String id;
     private String texto;
     private String resposta;
-    private boolean estado;
+    EstadoPedido estado;
     private Date data;
     private String idUtilizador;
 
-    public PedidoAjuda(String id, String texto, String resposta, boolean estado, Date data, String idUtilizador) {
+    private String idTrabalhador;
+
+    public PedidoAjuda(String id, String texto, String resposta, EstadoPedido estado, Date data, String idUtilizador,String idTrabalhador) {
         this.id = id;
         this.texto = texto;
         this.resposta = resposta;
         this.estado = estado;
         this.data = data;
         this.idUtilizador = idUtilizador;
+        this.idTrabalhador = idTrabalhador;
     }
 
     public String getId() {
@@ -43,12 +48,20 @@ public class PedidoAjuda {
         this.resposta = resposta;
     }
 
-    public boolean isEstado() {
+    public EstadoPedido getEstado() {
         return estado;
     }
 
-    public void setEstado(boolean estado) {
+    public void setEstado(EstadoPedido estado) {
         this.estado = estado;
+    }
+
+    public String getIdTrabalhador() {
+        return idTrabalhador;
+    }
+
+    public void setIdTrabalhador(String idTrabalhador) {
+        this.idTrabalhador = idTrabalhador;
     }
 
     public Date getData() {

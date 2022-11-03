@@ -1,6 +1,6 @@
 package Model;
 
 public enum EstadoPedido {
-    ABERTO,
-    FECHADO;
+    Aberto,
+    Fechado;
 }

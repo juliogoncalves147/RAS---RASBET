@@ -20,7 +20,7 @@ public class ControllerEspecialista extends Controller {
 
 
   
-    public void run() {
+    public void run() {/*
         int opcao = 0;
         while (opcao != 5) {
             this.view.especialistaMainMenu(this.user.getNomeutilizador());
@@ -47,5 +47,5 @@ public class ControllerEspecialista extends Controller {
                     this.view.line("Opção inválida!");
             }
         }
-    }
+    */}
 }
