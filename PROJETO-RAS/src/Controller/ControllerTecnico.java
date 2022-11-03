@@ -35,10 +35,10 @@ public class ControllerTecnico extends Controller {
                     this.view.line("Escreva a resposta ao pedido:");
                     String resposta = this.scan.nextLine();
                     this.responderPedido(resposta, pedidos.get(i-1));
-                    String notificacao = "O seu pedido de ajuda foi respondido com sucesso, aceda ao mesmo através da sua aréa de notificações";
+                    String notificacao = "O seu pedido de ajuda foi respondido com sucesso, aceda ao mesmo através da sua area de notificações";
                     String destinatarios = pedidos.get(i-1).getIdUtilizador();
                     this.enviarNotificacoes(notificacao,destinatarios);
-                    this.view.line("Pedido respondido com sucesso");
+                    
                     break;
                 case 3: //terminar sessão
                     this.view.line("A terminar sessão...");
@@ -49,5 +49,14 @@ public class ControllerTecnico extends Controller {
         }
     }
 
+
+    public void responderPedido(String resposta, PedidoAjuda pedido) {
+       if (this.db.update("UPDATE PedidoAjuda SET text = '" + resposta + "' WHERE id = '" + pedido.getId() + "'")) {
+            this.view.line("Pedido respondido com sucesso!");
+        } else {
+            this.view.line("Erro ao responder pedido!");
+        }
+    }
+   
 
 }

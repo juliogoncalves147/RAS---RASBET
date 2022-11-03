@@ -5,3 +5,5 @@ public enum EstadoJogo {
     FECHADO,
     SUSPENSO;
 }
+
+
