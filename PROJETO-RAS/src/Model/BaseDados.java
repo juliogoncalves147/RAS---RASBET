@@ -9,7 +9,7 @@ public class BaseDados {
 
     public BaseDados() {
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/projeto_ras", "rasUser", "Asdd00392384??");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/RASBET", "root", "root");
             stmt = conn.createStatement();
         } catch (SQLException e) {
             System.out.println(e.getMessage());

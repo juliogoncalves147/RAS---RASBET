@@ -34,8 +34,8 @@ public class Controller {
         String username = this.scan.nextLine();
         this.view.line("Password: ");
         String password = this.scan.nextLine();*/
-        String username = "henrique";
-        String password = "Henrique";
+        String username = "Tuberacher";
+        String password = "tuberacher";
         ResultSet userRS = this.db.query("SELECT * FROM User WHERE id = '" + username +
                 "' AND password = '" + password + "'");
         if (userRS != null) {
