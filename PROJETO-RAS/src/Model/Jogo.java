@@ -20,6 +20,11 @@ public class Jogo {
         return id;
     }
 
+    public LinkedHashMap<String, Double> getOdds() {
+
+        return odds;
+    }
+
     public EstadoJogo getEstado() {
         return estado;
     }
