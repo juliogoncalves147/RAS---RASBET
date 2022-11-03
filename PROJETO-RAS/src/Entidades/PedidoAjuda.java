@@ -73,5 +73,6 @@ public class PedidoAjuda {
         return "PedidoAjuda{" + "id=" + id + ", texto=" + texto + ", resposta=" + resposta + ", estado=" + estado + ", data=" + data + ", idUtilizador=" + idUtilizador + '}';
     }
 
-    
+
+
 }

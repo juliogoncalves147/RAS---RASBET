@@ -121,13 +121,7 @@ public class ControllerAdmin extends Controller {
         }
     }
 
-public void enviarNotificacoes(String notificacao, String destinatarios) {
-        if (this.db.update("INSERT INTO Notificacao (text, idUser) VALUES ('" + notificacao + "', '" + destinatarios + "')")){
-            this.view.line("Notificação enviada com sucesso!");
-        } else {
-            this.view.line("Erro ao enviar notificação!");
-        }
-    }
+
 
 
 
