@@ -1,10 +1,12 @@
 package Controller;
 
+import Entidades.PedidoAjuda;
 import Model.Apostador;
 import Model.BaseDados;
 import Model.Tecnico;
 import Model.Utilizador;
 import View.Menu;
+import java.util.*;
 
 import java.util.Scanner;
 
@@ -23,41 +25,29 @@ public class ControllerTecnico extends Controller {
             this.view.TecnicoMainMenu(this.user.getNomeutilizador());
             opcao = this.scan.nextInt();
             switch (opcao) {
-                case 1:
-
-                    this.view.line("Saldo: " + ((Apostador) this.user).getSaldo());
+                case 1: //consultar jogos
+                    this.getJogos();
                     break;
-                case 2:
-                    this.view.line("Insira o valor a depositar: ");
-                    double valor = this.scan.nextDouble();
-                    ((Apostador) this.user).depositar(valor);
-                    this.db.update("UPDATE User SET saldo = " + ((Apostador) this.user).getSaldo() +
-                            " WHERE id = '" + this.user.getId() + "'");
+                case 2: //responder a pedidos
+                    List<PedidoAjuda> pedidos = this.getPedidos();
+                    this.view.line("Escolha um pedido" );
+                    int i = this.scanOption(0, this.getPedidos().size());
+                    this.view.line("Escreva a resposta ao pedido:");
+                    String resposta = this.scan.nextLine();
+                    this.responderPedido(resposta, pedidos.get(i-1));
+                    String notificacao = "O seu pedido de ajuda foi respondido com sucesso, aceda ao mesmo através da sua aréa de notificações";
+                    String destinatarios = pedidos.get(i-1).getIdUtilizador();
+                    this.enviarNotificacoes(notificacao,destinatarios);
+                    this.view.line("Pedido respondido com sucesso");
                     break;
-                case 3:
-                    this.view.line("Insira o valor a levantar: ");
-                    valor = this.scan.nextDouble();
-                    ((Apostador) this.user).levantar(valor);
-                    this.db.update("UPDATE User SET saldo = " + ((Apostador) this.user).getSaldo() +
-                            " WHERE id = '" + this.user.getId() + "'");
-                    break;
-                case 4:
-                    this.view.line("Insira o valor a apostar: ");
-                    valor = this.scan.nextDouble();
-                    this.view.line("Insira o id do evento: ");
-                    String idEvento = this.scan.next();
-                    this.view.line("Insira o id da equipa: ");
-                    String idEquipa = this.scan.next();
-                    ((Apostador) this.user).apostar(valor, idEvento, idEquipa);
-                    this.db.update("UPDATE User SET saldo = " + ((Apostador) this.user).getSaldo() +
-                            " WHERE id = '" + this.user.getId() + "'");
-                    break;
-                case 5:
-                    this.view.line("A sair...");
+                case 3: //terminar sessão
+                    this.view.line("A terminar sessão...");
                     break;
                 default:
                     this.view.line("Opção inválida!");
             }
         }
     }
+
+
 }

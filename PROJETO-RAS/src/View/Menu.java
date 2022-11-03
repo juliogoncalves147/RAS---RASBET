@@ -93,8 +93,9 @@ public class Menu implements Serializable {
     public void adminMainMenu(String username) {
         subheader("View.Menu principal", username);
         optionsMenu(new String[]{"1 - Consultar Jogos",
-                "2 - Criar Promoções",
-                "3 - Enviar notificações",
+                "2 - Alterar Estado da Aposta",
+                "3 - Criar Promoções",
+                "4 - Enviar notificações",
                 "0 - Terminar Sessão"});
         line("Pretende: ");
     }
