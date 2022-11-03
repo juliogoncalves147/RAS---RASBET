@@ -225,9 +225,9 @@ public class Controller {
         List<PedidoAjuda> pedidos = new ArrayList<>();
         try {
             while (rs.next()) {
-                pedidos.add(new PedidoAjuda(rs.getString("id"), rs.getString("userApostador"),
-                        rs.getString("userTecnico"), rs.getString("texto"), rs.getString("resposta"),
-                        EstadoPedido.values()[rs.getInt("estado")]));
+                pedidos.add(new PedidoAjuda(rs.getString("id"),rs.getString("texto"),rs.getString("resposta"),
+                        EstadoPedido.values()[rs.getInt("estado")],rs.getDate("data"),  rs.getString("idUtilizador"),
+                        rs.getString("idTrabalhador")));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -235,6 +235,11 @@ public class Controller {
         return pedidos;
 
     }
+
+
+
+
+
 
     public void enviarNotificacoes(String notificacao, String destinatarios) {
         if (this.db.update("INSERT INTO Notificacao (text, idUser) VALUES ('" + notificacao + "', '" + destinatarios + "')")){
