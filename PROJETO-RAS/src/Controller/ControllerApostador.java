@@ -5,18 +5,28 @@ import Model.EstadoJogo;
 import Model.Jogo;
 
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class ControllerApostador extends Controller {
     private final Apostador user;
 
-    public ControllerApostador(Apostador user, Controller controller) {
+    public ControllerApostador(Apostador user, Controller controller){
         this.user = user;
         this.view = controller.getView();
         this.scan = controller.getScan();
         this.db = controller.getDb();
+
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-ddT20:16:08.000Z", Locale.ENGLISH);
+
+            String dateInString = "7-Jun-2013";
+            Date date = formatter.parse(dateInString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void run() {
