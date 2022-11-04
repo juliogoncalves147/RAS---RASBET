@@ -247,6 +247,43 @@ public class Controller {
         return jogos;
     }
 
+    public List<Jogo> getJogosSemOdd(String desporto) {
+
+        List<Jogo> jogos = new ArrayList<>();
+
+        if (desporto.equals("")) return jogos;
+
+        /*
+        SELECT DISTINCT j.id, j.desporto, j.data, j.estado
+        FROM Jogo j
+        INNER JOIN Odds o
+        ON NOT EXISTS (SELECT * FROM Odds WHERE idJogo = j.id)
+        WHERE j.desporto = 'Futebol';
+        */
+
+        ResultSet rs = this.db.query("SELECT DISTINCT j.id, j.desporto, j.data, j.estado FROM Jogo j INNER JOIN Odds o " +
+                       "ON NOT EXISTS (SELECT * FROM Odds WHERE idJogo = j.id) WHERE j.desporto = '" + desporto + "';");
+
+        try {
+            while (rs.next())
+                jogos.add(new Jogo(rs.getString("id"), EstadoJogo.values()[rs.getInt("estado")],
+                        rs.getDate("data"), null));
+
+            for (Jogo j : jogos) {
+                ResultSet odds = this.db.query("SELECT * FROM Odds WHERE idJogo = '" + j.getId() + "'");
+                LinkedHashMap<String, Double> oddsMap = new LinkedHashMap<>();
+                while (odds != null && odds.next()) {
+                    oddsMap.put(odds.getString("prognostico"), odds.getDouble("valor"));
+                }
+                j.setOdds(oddsMap);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return jogos;
+    }
+
     public List<String> getMenuDesportos() {
         ResultSet sports = this.db.query("SELECT desporto FROM Desporto");
         List<String> desportos = new ArrayList<>();
@@ -266,7 +303,8 @@ public class Controller {
         ArrayList<String> jogosString = new ArrayList<>();
 
         for (int i = 0; i < jogos.size(); i++) {
-            jogosString.add(i + 1 + " - " + jogos.get(i).toString());
+            Jogo j = jogos.get(i);
+            jogosString.add(j.getId() + " - " + j.toString());
         }
 
         jogosString.add("0 - Voltar");

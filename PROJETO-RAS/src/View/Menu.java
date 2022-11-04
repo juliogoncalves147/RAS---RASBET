@@ -72,8 +72,8 @@ public class Menu implements Serializable {
     public void especialistaMainMenu(String username) {
         subheader("Menu principal", username);
         optionsMenu(new String[]{"1 - Consultar Jogos",
-                /*"2 - Inserir Odd",*/
-                "2 - Atualizar Odd",
+                "2 - Inserir Odd",
+                "3 - Atualizar Odd",
                 "0 - Terminar Sessão"});
         line("Pretende: ");
     }
