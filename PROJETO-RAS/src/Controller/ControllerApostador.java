@@ -82,6 +82,8 @@ public class ControllerApostador extends Controller {
                     this.view.subheader("Pedir ajuda", this.user.getNomeutilizador() + " - " + this.user.getSaldo() + this.currencyTime.getCurrency());
                     this.pedirAjuda();
                     break;
+                case 0:
+                    break;
                default:
                     this.view.line("Opção inválida!");
                     break;
@@ -281,7 +283,7 @@ public class ControllerApostador extends Controller {
 
         if (jogos.size() > 0) {
             while (multipla) {
-                this.view.line("Insira o índice do jogo: ");
+                this.view.line("Insira o índice do jogo ou 0 se quiser voltar: ");
 
                 int opcao = this.scanOption(0, jogos.size());
                 if (opcao == 0) return;
@@ -293,9 +295,9 @@ public class ControllerApostador extends Controller {
 
                 if (!boletim.contains(aposta) && this.db.query("SELECT * FROM Odds WHERE idJogo = '" + jogos.get(opcao - 1).getId() + "' AND prognostico = '" + prognostico + "'") != null) {
                     boletim.add(new AbstractMap.SimpleEntry<>(jogos.get(opcao - 1).getId(), prognostico));
-                    this.view.line("Deseja apostar em mais jogos? (S/N)");
+                    this.view.line("Deseja apostar em mais jogos? (S/N): ");
                     String op = this.scan.next();
-                    if (op.equals("N") || op.equals("n")) {
+                    if ( !(op.equals("S") || op.equals("s")) ) {
                         for (AbstractMap.SimpleEntry<String, String> a : boletim) {
                             ResultSet odd = this.db.query("SELECT * FROM Odds WHERE idJogo = '" + a.getKey() + "' AND prognostico = '" + a.getValue() + "'");
                             try {
@@ -312,14 +314,14 @@ public class ControllerApostador extends Controller {
                             Double valor = this.scan.nextDouble();
                             if (this.user.levantar(valor)) {
                                 Jogo jogo = jogos.get(opcao - 1);
-                                if (jogo.getEstado() == EstadoJogo.ABERTO) {
-                                } else {
+                                if (jogo.getEstado() != EstadoJogo.ABERTO) {
                                     this.view.line("Não é possível apostar neste jogo!");
+                                    return;
                                 }
 
-                                if (this.db.update("UPDATE User SET saldo = " + this.user.getSaldo() +
+                                if (this.db.update("UPDATE User SET saldo = " + (this.user.getSaldo() - valor) +
                                         " WHERE id = '" + this.user.getNomeutilizador() + "'") &&
-                                        this.db.update("INSERT INTO Apostas (id, idJogo, idApostador, prognostico, valor) VALUES ('" +
+                                        this.db.update("INSERT INTO Boletim (id, idJogo, idApostador, prognostico, valor) VALUES ('" +
                                                 jogo.getId() + "', '" + this.user.getNomeutilizador() + "', '" + prognostico + "', " + valor + ")")) {
                                     this.view.line("Aposta registada com sucesso!");
                                 }
