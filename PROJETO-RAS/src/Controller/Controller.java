@@ -3,28 +3,47 @@ package Controller;
 import Model.*;
 import View.Menu;
 
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.ResultSet;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import Model.PedidoAjuda;
-
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.URL;
+import java.nio.charset.Charset;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Controller {
-    String currency;
     BaseDados db;
     Menu view;
     Scanner scan;
+    CurrencyTime currencyTime;
+
     public Controller() {
         this.db = new BaseDados();
         this.view = new Menu();
         this.scan = new Scanner(System.in);
-        this.currency = "€";
+        this.currencyTime = new CurrencyTime();
     }
-
-   
-
 
     private Utilizador login() {
         //TODO: alterar isto
@@ -34,8 +53,8 @@ public class Controller {
         String username = this.scan.nextLine();
         this.view.line("Password: ");
         String password = this.scan.nextLine();*/
-        String username = "a";
-        String password = "a";
+        String username ="Tuberacher";
+        String password = "tuberacher";
         ResultSet userRS = this.db.query("SELECT * FROM User WHERE id = '" + username +
                 "' AND password = '" + password + "'");
         if (userRS != null) {
@@ -87,7 +106,6 @@ public class Controller {
     }
 
     private boolean registar() {
-        this.scan.nextLine();
         this.view.line("Nome: ");
         String nome = this.scan.nextLine();
         this.view.line("Username: ");
@@ -133,8 +151,8 @@ public class Controller {
                 if (opt < min || opt > max) this.view.line("Opção inválida, tente novamente.");
             } catch (InputMismatchException e) {
                 this.view.line("Opção inválida, tente novamente.");
-                this.scan.nextLine();
             }
+            this.scan.nextLine();
         }
         return opt;
     }
@@ -145,8 +163,8 @@ public class Controller {
         int opt = this.scanOption(0, 2);
         switch (opt) {
             case 1:
-                if(this.registar()) this.login();
-                else this.run();
+                this.registar();
+                this.run();
                 break;
             case 2:
                 Utilizador user = this.login();
@@ -161,7 +179,6 @@ public class Controller {
                         new ControllerAdmin((Administrador) user, this).run();
                 }
                 else this.run();
-                //this.connect(); //as promocoes/desportos são inicializados
                 break;
             case 0:
                 break;
@@ -186,14 +203,15 @@ public class Controller {
         List<Jogo> jogos = new ArrayList<>();
 
         if (opcao == 0) return jogos;
-
+        String sport = desportos.get(opcao - 1).split(" - ")[1];
+        this.view.subheader("Jogos de " + sport, "");
         ResultSet rs = this.db.query("SELECT * FROM Jogo WHERE desporto = '" +
-                desportos.get(opcao - 1).split(" - ")[1] + "'" + "AND estado = 0 OR estado = 1");
+                sport + "'" + "AND estado = 0 OR estado = 1");
 
         try {
             while (rs.next())
                 jogos.add(new Jogo(rs.getString("id"), EstadoJogo.values()[rs.getInt("estado")],
-                        rs.getDate("data"), null));
+                        LocalDateTime.parse(rs.getString("data"), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), null));
 
             for (Jogo j : jogos) {
                 ResultSet odds = this.db.query("SELECT * FROM Odds WHERE idJogo = '" + j.getId() + "'");
@@ -210,11 +228,16 @@ public class Controller {
         ArrayList<String> jogosString = new ArrayList<>();
 
         for (int i = 0; i < jogos.size(); i++) {
-            jogosString.add(i + 1 + " - " + jogos.get(i).toString());
+            Jogo jogo = jogos.get(i);
+            jogo.setData((this.currencyTime.convertdatetime(jogo.getData())));
+            for (Map.Entry<String, Double> odd : jogo.getOdds().entrySet()) {
+                BigDecimal bd = BigDecimal.valueOf(this.currencyTime.convertCurrency(odd.getValue()));
+                bd = bd.setScale(2, RoundingMode.HALF_UP);
+                odd.setValue(bd.doubleValue());
+            }
+            this.view.line(i+1 + " -> " + jogo + "\n");
         }
 
-        jogosString.add("0 - Voltar");
-        this.view.optionsMenu(jogosString.toArray(new String[0]));
         return jogos;
     }
 
@@ -230,7 +253,7 @@ public class Controller {
         try {
             while (rs.next())
                 jogos.add(new Jogo(rs.getString("id"), EstadoJogo.values()[rs.getInt("estado")],
-                        rs.getDate("data"), null));
+                        LocalDateTime.parse(rs.getString("data"), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), null));
 
             for (Jogo j : jogos) {
                 ResultSet odds = this.db.query("SELECT * FROM Odds WHERE idJogo = '" + j.getId() + "'");
@@ -247,6 +270,11 @@ public class Controller {
         return jogos;
     }
 
+    public String createID() {
+        byte[] array = new byte[255]; // length is bounded by 7
+        new Random().nextBytes(array);
+        return new String(array, Charset.forName("UTF-8"));
+    }
     public List<Jogo> getJogosSemOdd(String desporto) {
 
         List<Jogo> jogos = new ArrayList<>();
@@ -267,7 +295,7 @@ public class Controller {
         try {
             while (rs.next())
                 jogos.add(new Jogo(rs.getString("id"), EstadoJogo.values()[rs.getInt("estado")],
-                        rs.getDate("data"), null));
+                        LocalDateTime.parse(rs.getString("data"), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), null));
 
             for (Jogo j : jogos) {
                 ResultSet odds = this.db.query("SELECT * FROM Odds WHERE idJogo = '" + j.getId() + "'");
@@ -326,11 +354,6 @@ public class Controller {
         return pedidos;
 
     }
-
-
-
-
-
 
     public void enviarNotificacoes(String notificacao, String destinatarios) {
         if (this.db.update("INSERT INTO Notificacao (text, idUser) VALUES ('" + notificacao + "', '" + destinatarios + "')")){
