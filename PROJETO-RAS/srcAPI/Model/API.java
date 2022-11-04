@@ -42,39 +42,39 @@ public class API {
             PreparedStatement preparedStmt = conn.prepareStatement(query);
             preparedStmt.setString (1, id);
             preparedStmt.setString (2, formatada);
-            preparedStmt.setInt   (3, estado);
+            preparedStmt.setInt  (3, estado);
             preparedStmt.execute();
 
             Bookmaker bookmaker = jogo.getBookmakers().get(0);
             String homeTeam =  bookmaker.getMarkets().get(0).getOutcomes().get(1).getName();
             String awayTeam =  bookmaker.getMarkets().get(0).getOutcomes().get(0).getName();
             String draw = bookmaker.getMarkets().get(0).getOutcomes().get(2).getName();
-            int homeOdd = bookmaker.getMarkets().get(0).getOutcomes().get(1).getPrice();
-            int awayOdd = bookmaker.getMarkets().get(0).getOutcomes().get(0).getPrice();
-            int drawOdd = bookmaker.getMarkets().get(0).getOutcomes().get(2).getPrice();
+            double homeOdd = bookmaker.getMarkets().get(0).getOutcomes().get(1).getPrice();
+            double awayOdd = bookmaker.getMarkets().get(0).getOutcomes().get(0).getPrice();
+            double drawOdd = bookmaker.getMarkets().get(0).getOutcomes().get(2).getPrice();
             // Alterar esta query para inserir os odds direitas
             String query2 = "insert ignore into Odds (idJogo, prognostico, valor) values (?, ? ,  ? ) on duplicate key update valor = ?;";
             preparedStmt = conn.prepareStatement(query2);
             preparedStmt.setString (1, id);
             preparedStmt.setString (2, homeTeam);
-            preparedStmt.setInt   (3, homeOdd);
-            preparedStmt.setInt(4, homeOdd);
+            preparedStmt.setDouble (3, homeOdd);
+            preparedStmt.setDouble( 4, homeOdd);
             preparedStmt.executeUpdate();
 
             String query3 = "insert ignore into Odds (idJogo, prognostico, valor) values (?, ? ,  ? ) on duplicate key update valor = ?;";
             preparedStmt = conn.prepareStatement(query3);
             preparedStmt.setString (1, id);
             preparedStmt.setString (2, awayTeam);
-            preparedStmt.setInt   (3, awayOdd);
-            preparedStmt.setInt   (4, awayOdd);
+            preparedStmt.setDouble (3, awayOdd);
+            preparedStmt.setDouble (4, awayOdd);
             preparedStmt.executeUpdate();
 
             String query4 =  "insert ignore into Odds (idJogo, prognostico, valor) values (?, ? ,  ? ) on duplicate key update valor = ?;";
             preparedStmt = conn.prepareStatement(query4);
             preparedStmt.setString (1, id);
             preparedStmt.setString (2, draw);
-            preparedStmt.setInt   (3, drawOdd);
-            preparedStmt.setInt   (4, drawOdd);
+            preparedStmt.setDouble (3, drawOdd);
+            preparedStmt.setDouble (4, drawOdd);
             preparedStmt.executeUpdate();
         }
         conn.close();
