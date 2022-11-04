@@ -1,6 +1,10 @@
 package View;
 
 import java.io.Serializable;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 public class Menu implements Serializable {
 
@@ -68,8 +72,8 @@ public class Menu implements Serializable {
     public void especialistaMainMenu(String username) {
         subheader("Menu principal", username);
         optionsMenu(new String[]{"1 - Consultar Jogos",
-                "2 - Inserir Odd",
-                "3 - Atualizar Odd",
+                /*"2 - Inserir Odd",*/
+                "2 - Atualizar Odd",
                 "0 - Terminar Sessão"});
         line("Pretende: ");
     }
@@ -99,4 +103,18 @@ public class Menu implements Serializable {
                 "0 - Terminar Sessão"});
         line("Pretende: ");
     }
+
+    public void printOdds(ResultSet odds) throws SQLException {
+        // ResultSet odds = "SELECT * FROM Odds WHERE idJogo='" + idJogo + "'"
+        int i = 1;
+        while(odds.next()) {
+            System.out.println(i + " " + odds.getString("idJogo") + " - "
+                                       + odds.getString("prognostico") + " - "
+                                       + odds.getString("valor"));
+            i++;
+        }
+
+        odds.beforeFirst();
+    }
+
 }

@@ -16,7 +16,7 @@ public class ControllerTecnico extends Controller {
 
     public void run() {
         int opcao = 0;
-        while (opcao != 5) {
+        /*while (opcao != 5) {
             this.view.TecnicoMainMenu(this.user.getNomeutilizador());
             opcao = this.scan.nextInt();
             switch (opcao) {
@@ -41,7 +41,7 @@ public class ControllerTecnico extends Controller {
                 default:
                     this.view.line("Opção inválida!");
             }
-        }
+        }*/
     }
 
 

@@ -10,7 +10,7 @@ public class BaseDados {
     public BaseDados() {
         try {
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/projeto_ras", "ras", "ras");
-            stmt = conn.createStatement();
+            stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,  ResultSet.CONCUR_UPDATABLE);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -18,7 +18,7 @@ public class BaseDados {
 
     public boolean update(String query) {
         try {
-            Statement stmt = conn.createStatement();
+            Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,  ResultSet.CONCUR_UPDATABLE);
             stmt.executeUpdate(query);
             return true;
         } catch (SQLException e) {

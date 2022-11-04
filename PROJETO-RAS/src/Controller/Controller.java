@@ -34,8 +34,8 @@ public class Controller {
         String username = this.scan.nextLine();
         this.view.line("Password: ");
         String password = this.scan.nextLine();*/
-        String username = "Tuberacher";
-        String password = "tuberacher";
+        String username = "a";
+        String password = "a";
         ResultSet userRS = this.db.query("SELECT * FROM User WHERE id = '" + username +
                 "' AND password = '" + password + "'");
         if (userRS != null) {
@@ -52,20 +52,20 @@ public class Controller {
                 else if (tipo == 1)
                     user = new Tecnico(userRS.getString("nome"), userRS.getString("id"),
                             userRS.getString("email"), userRS.getString("password"),
-                            userRS.getBoolean("isLogged"), userRS.getDate("dataNascimento"),
-                            userRS.getString("numeroidfiscal"), userRS.getString("numeroidcivil"),
+                            userRS.getBoolean("logado"), userRS.getDate("dataNascimento"),
+                            userRS.getString("idFiscal"), userRS.getString("idCivil"),
                             false);
                 else if (tipo == 2)
                     user = new Especialista(userRS.getString("nome"), userRS.getString("id"),
                             userRS.getString("email"), userRS.getString("password"),
-                            userRS.getBoolean("isLogged"), userRS.getDate("dataNascimento"),
-                            userRS.getString("numeroidfiscal"), userRS.getString("numeroidcivil"),
+                            userRS.getBoolean("logado"), userRS.getDate("dataNascimento"),
+                            userRS.getString("idFiscal"), userRS.getString("idCivil"),
                             false);
                 else if (tipo == 3)
                     user = new Administrador(userRS.getString("nome"), userRS.getString("id"),
                             userRS.getString("email"), userRS.getString("password"),
-                            userRS.getBoolean("isLogged"), userRS.getDate("dataNascimento"),
-                            userRS.getString("numeroidfiscal"), userRS.getString("numeroidcivil"),
+                            userRS.getBoolean("logado"), userRS.getDate("dataNascimento"),
+                            userRS.getString("idFiscal"), userRS.getString("idCivil"),
                             false);
 
                 this.db.update("UPDATE User SET logado = 1 WHERE id = '" + username + "'");
@@ -216,6 +216,61 @@ public class Controller {
         jogosString.add("0 - Voltar");
         this.view.optionsMenu(jogosString.toArray(new String[0]));
         return jogos;
+    }
+
+    public List<Jogo> getJogos(String desporto) {
+
+        List<Jogo> jogos = new ArrayList<>();
+
+        if (desporto.equals("")) return jogos;
+
+        ResultSet rs = this.db.query("SELECT * FROM Jogo WHERE desporto = '" +
+                desporto + "'" + "AND estado = 0 OR estado = 1");
+
+        try {
+            while (rs.next())
+                jogos.add(new Jogo(rs.getString("id"), EstadoJogo.values()[rs.getInt("estado")],
+                        rs.getDate("data"), null));
+
+            for (Jogo j : jogos) {
+                ResultSet odds = this.db.query("SELECT * FROM Odds WHERE idJogo = '" + j.getId() + "'");
+                LinkedHashMap<String, Double> oddsMap = new LinkedHashMap<>();
+                while (odds != null && odds.next()) {
+                    oddsMap.put(odds.getString("prognostico"), odds.getDouble("valor"));
+                }
+                j.setOdds(oddsMap);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return jogos;
+    }
+
+    public List<String> getMenuDesportos() {
+        ResultSet sports = this.db.query("SELECT desporto FROM Desporto");
+        List<String> desportos = new ArrayList<>();
+        try {
+            for (int i = 1; sports.next(); i++) {
+                desportos.add(i + " - " + sports.getString("desporto"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        desportos.add("0 - Voltar");
+        return desportos;
+    }
+
+    public List<String> getMenuJogos(List<Jogo> jogos) {
+
+        ArrayList<String> jogosString = new ArrayList<>();
+
+        for (int i = 0; i < jogos.size(); i++) {
+            jogosString.add(i + 1 + " - " + jogos.get(i).toString());
+        }
+
+        jogosString.add("0 - Voltar");
+        return jogosString;
     }
 
     public List<PedidoAjuda> getPedidos(){
