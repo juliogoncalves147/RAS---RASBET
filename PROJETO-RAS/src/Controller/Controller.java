@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -53,8 +54,8 @@ public class Controller {
         String username = this.scan.nextLine();
         this.view.line("Password: ");
         String password = this.scan.nextLine();*/
-        String username ="Tuberacher";
-        String password = "tuberacher";
+        String username ="t";
+        String password = "t";
         ResultSet userRS = this.db.query("SELECT * FROM User WHERE id = '" + username +
                 "' AND password = '" + password + "'");
         if (userRS != null) {
@@ -340,13 +341,14 @@ public class Controller {
     }
 
     public List<PedidoAjuda> getPedidos(){
-        ResultSet rs = this.db.query("SELECT * FROM PedidoAjuda WHERE estado = 0");
+        ResultSet rs = this.db.query("SELECT * FROM PedidoAjuda WHERE userTecnico IS NULL");
+
         List<PedidoAjuda> pedidos = new ArrayList<>();
         try {
             while (rs.next()) {
-                pedidos.add(new PedidoAjuda(rs.getString("id"),rs.getString("texto"),rs.getString("resposta"),
-                        EstadoPedido.values()[rs.getInt("estado")],rs.getDate("data"),  rs.getString("idUtilizador"),
-                        rs.getString("idTrabalhador")));
+                pedidos.add(new PedidoAjuda("0", rs.getString("texto"), rs.getString("resposta"),
+                        null,rs.getDate("data"),  rs.getString("userApostador"),
+                        rs.getString("userTecnico")));
             }
         } catch (Exception e) {
             e.printStackTrace();
