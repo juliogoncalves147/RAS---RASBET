@@ -47,15 +47,15 @@ public class Controller {
     }
 
     private Utilizador login() {
-        //TODO: alterar isto
-        /*
+
+
         this.scan.nextLine();
         this.view.line("Username: ");
         String username = this.scan.nextLine();
         this.view.line("Password: ");
-        String password = this.scan.nextLine();*/
-        String username ="t";
-        String password = "t";
+        String password = this.scan.nextLine();
+        //String username ="t";
+        //String password = "t";
         ResultSet userRS = this.db.query("SELECT * FROM User WHERE id = '" + username +
                 "' AND password = '" + password + "'");
         if (userRS != null) {
@@ -357,12 +357,20 @@ public class Controller {
 
     }
 
-    public void enviarNotificacoes(String notificacao, String destinatarios) {
-        if (this.db.update("INSERT INTO Notificacao (text, idUser) VALUES ('" + notificacao + "', '" + destinatarios + "')")){
-            this.view.line("Notificação enviada com sucesso!");
-        } else {
-            this.view.line("Erro ao enviar notificação!");
-        }
+    public void enviarNotificacoes(String notificacao, String destinatarios, String idTrabalhador) {
+
+
+        if(destinatarios.equals("todos")) {
+            if( this.db.update( "INSERT INTO Notificacao VALUES('" + UUID.randomUUID() + "', 1, NULL, '" + notificacao + "', '" + idTrabalhador + "')"))
+                this.view.line("Notificação enviada com sucesso!");
+            else
+                this.view.line("Erro ao enviar notificação!");
+        }else{
+            if (this.db.update("INSERT INTO Notificacao VALUES('" + UUID.randomUUID() + "', 0, '"+ destinatarios + "', '" + notificacao + "', '" + idTrabalhador + "')")){
+                this.view.line("Notificação enviada com sucesso!");
+            } else {
+                this.view.line("Erro ao enviar notificação!");
+            }}
     }
 
     public BaseDados getDb() {

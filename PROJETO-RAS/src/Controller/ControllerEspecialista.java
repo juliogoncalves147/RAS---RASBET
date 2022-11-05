@@ -35,6 +35,10 @@ public class ControllerEspecialista extends Controller {
                     // 3 Atualizar odd
                     atualizarOdd();
                     break;
+                case 0: //Terminar sessão
+                    this.view.line("A terminar sessão...");
+                    return;
+
                 default:
                     this.view.line("Opção inválida!");
                     break;
