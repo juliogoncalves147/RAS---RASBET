@@ -30,6 +30,9 @@ public class ControllerTecnico extends Controller {
                     break;
                 case 2: //responder a pedidos
                     List<PedidoAjuda> pedidos = this.getPedidos();
+                    for (int i = 0; i < pedidos.size(); i++) {
+                        this.view.line((i+1) + " - " + pedidos.get(i).getTexto());
+                    }
                     this.view.line("Escolha um pedido" );
                     int i = this.scanOption(1, this.getPedidos().size());
                     this.view.line("Escreva a resposta ao pedido:");
@@ -40,7 +43,7 @@ public class ControllerTecnico extends Controller {
                     this.enviarNotificacoes(notificacao,destinatarios,this.user.getNomeutilizador());
 
                     break;
-                case 3: //terminar sessão
+                case 0: //terminar sessão
                     this.view.line("A terminar sessão...");
                     break;
                 default:
@@ -51,7 +54,7 @@ public class ControllerTecnico extends Controller {
 
 
     public void responderPedido(String resposta, PedidoAjuda pedido, String idTrabalhador) {
-        if (this.db.update("UPDATE PedidoAjuda SET resposta = '" + resposta + "' , idTrabalhador='" + idTrabalhador +  "' WHERE id = '" + pedido.getId() + "'")) {
+        if (this.db.update("UPDATE PedidoAjuda SET resposta = '" + resposta + "' , userTecnico = '" + idTrabalhador +  "' WHERE data = '" + pedido.getData() + "'")) {
             this.view.line("Pedido respondido com sucesso!");
         } else {
             this.view.line("Erro ao responder pedido!");

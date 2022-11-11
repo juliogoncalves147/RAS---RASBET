@@ -49,7 +49,7 @@ public class Controller {
     private Utilizador login() {
 
 
-        this.scan.nextLine();
+       // this.scan.nextLine();
         this.view.line("Username: ");
         String username = this.scan.nextLine();
         this.view.line("Password: ");

@@ -30,7 +30,7 @@ public class API {
     private static HttpURLConnection connection;
 
     private static void updateSQL(List<Jogo> jogos) throws SQLException {
-        Connection conn = DriverManager.getConnection("jdbc:mysql://34.175.91.230:3306/projeto_ras", "root", "rasbet");
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/projeto_ras", "ras", "ras");
 
         for (Jogo jogo : jogos) {
             String id = jogo.getId();
@@ -105,8 +105,8 @@ public class API {
                     connection = (HttpURLConnection) url.openConnection();
                     // Request setup
                     connection.setRequestMethod("GET");
-                    connection.setConnectTimeout(5000);
-                    connection.setReadTimeout(5000);
+                    connection.setConnectTimeout(500000);
+                    connection.setReadTimeout(500000);
 
                     int status = connection.getResponseCode();
                     //System.out.println(status);

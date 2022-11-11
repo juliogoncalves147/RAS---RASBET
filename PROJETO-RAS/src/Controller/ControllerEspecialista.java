@@ -107,25 +107,25 @@ public class ControllerEspecialista extends Controller {
         List<String> menuJogos = this.getMenuJogos(jogos);
         this.view.optionsMenu(menuJogos.toArray(new String[0]));
 
-
+        String idJogo = "";
         // 3.3 Input id jogo
-        Integer idJogo = -1;
+        //Integer idJogo = -1;
         boolean existe = false;
         while(!existe) { // Caso nao exista, tenta novamente
             // 3.3.1 Scan Id Jogo
             this.view.line("Porfavor introduza o id do jogo que pretende alterar: ");
-            idJogo = this.scan.nextInt();
+             idJogo = this.scan.nextLine();
 
             // 3.3.2 Verifica existencia idJogo
             for (Jogo j : jogos) {
-                if (j.getId().equals(idJogo.toString()))
+                if (j.getId().equals(idJogo))
                     existe = true;
             }
         }
 
         // 3.4 Print odds
         ResultSet rs = null;
-        rs = this.db.query("SELECT * FROM Odds WHERE idJogo='" + idJogo.toString() + "'");
+        rs = this.db.query("SELECT * FROM Odds WHERE idJogo='" + idJogo + "'");
         try {
             this.view.printOdds(rs);
         } catch (SQLException e) {

@@ -111,7 +111,7 @@ public class ControllerAdmin extends Controller {
 
 
     public void alterarEstadoJogo(int estado, Jogo jogo) {
-        if (this.db.update("UPDATE Jogo SET estado = " + estado + " WHERE id = " + jogo.getId())){
+        if (this.db.update("UPDATE Jogo SET estado = " + estado + " WHERE id = '" + jogo.getId() + "'")) {
             this.view.line("Estado alterado com sucesso!");
         } else {
             this.view.line("Erro ao alterar estado!");
