@@ -8,7 +8,7 @@
 .idea/dataSources.local.xml
 .idea/
 out/*
+*.iml
 RAS---RASBET.iml
 RASBET.iml
-*.iml
 *.ipr

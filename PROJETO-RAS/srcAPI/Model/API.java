@@ -1,40 +1,37 @@
 package Model;
 
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.Connection;
-import java.sql.Statement;
-import java.text.DateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatterBuilder;
-import java.time.format.DateTimeParseException;
-import java.util.Date;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.sql.*;
-import java.util.Date;
 
 public class API {
     private static HttpURLConnection connection;
 
     private static void updateSQL(List<Jogo> jogos) throws SQLException {
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/projeto_ras", "ras", "ras");
+        Connection conn;
+        try {
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/projeto_ras", "ras", "ras");
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console");
+            e.printStackTrace();
+            return;
+        }
 
         for (Jogo jogo : jogos) {
             String id = jogo.getId();
-            String desporto = "Futebol";
             String data = jogo.getCommenceTime();
             String formatada = data.substring(0, 10) + " " + data.substring(11, 19);
             int estado = jogo.getCompleted() ? 1 : 0;
@@ -52,37 +49,30 @@ public class API {
             double homeOdd = bookmaker.getMarkets().get(0).getOutcomes().get(1).getPrice();
             double awayOdd = bookmaker.getMarkets().get(0).getOutcomes().get(0).getPrice();
             double drawOdd = bookmaker.getMarkets().get(0).getOutcomes().get(2).getPrice();
-            // Alterar esta query para inserir os odds direitas
-            String query2 = "insert ignore into Odds (idJogo, prognostico, valor) values (?, ? ,  ? ) on duplicate key update valor = ?;";
-            preparedStmt = conn.prepareStatement(query2);
-            preparedStmt.setString (1, id);
-            preparedStmt.setString (2, homeTeam);
-            preparedStmt.setDouble (3, homeOdd);
-            preparedStmt.setDouble( 4, homeOdd);
-            preparedStmt.executeUpdate();
 
-            String query3 = "insert ignore into Odds (idJogo, prognostico, valor) values (?, ? ,  ? ) on duplicate key update valor = ?;";
-            preparedStmt = conn.prepareStatement(query3);
-            preparedStmt.setString (1, id);
-            preparedStmt.setString (2, awayTeam);
-            preparedStmt.setDouble (3, awayOdd);
-            preparedStmt.setDouble (4, awayOdd);
-            preparedStmt.executeUpdate();
+            putOdd(conn, id, homeTeam, homeOdd);
+            putOdd(conn, id, awayTeam, awayOdd);
 
-            String query4 =  "insert ignore into Odds (idJogo, prognostico, valor) values (?, ? ,  ? ) on duplicate key update valor = ?;";
-            preparedStmt = conn.prepareStatement(query4);
-            preparedStmt.setString (1, id);
-            preparedStmt.setString (2, draw);
-            preparedStmt.setDouble (3, drawOdd);
-            preparedStmt.setDouble (4, drawOdd);
-            preparedStmt.executeUpdate();
+            putOdd(conn, id, draw, drawOdd);
         }
         conn.close();
     }
 
+    private static void putOdd(Connection conn, String id, String team, double odd) throws SQLException {
+        PreparedStatement preparedStmt;
+        String query2 = "insert ignore into Odds (idJogo, prognostico, valor) values (?, ? ,  ? ) on duplicate key update valor = ?;";
+        preparedStmt = conn.prepareStatement(query2);
+        preparedStmt.setString (1, id);
+        preparedStmt.setString (2, team);
+        preparedStmt.setDouble (3, odd);
+        preparedStmt.setDouble( 4, odd);
+        preparedStmt.executeUpdate();
+    }
+
     private static void StringtoJson(String json) throws JsonProcessingException, SQLException {
         ObjectMapper objectMapper = new ObjectMapper();
-        List<Jogo> listJogo = objectMapper.readValue(json, new TypeReference<List<Jogo>>(){});
+        List<Jogo> listJogo = objectMapper.readValue(json, new TypeReference<>() {
+        });
 
         for(Jogo j : listJogo){
             System.out.println(j.toString());
@@ -91,7 +81,7 @@ public class API {
         updateSQL(listJogo);
     }
 
-    public static void main(String[] args) throws JsonProcessingException, SQLException {
+    public static void main(String[] args) {
 
         TimerTask task = new TimerTask() {
             @Override
@@ -99,7 +89,7 @@ public class API {
                 try {
                     BufferedReader reader;
                     String line;
-                    StringBuffer responseContent = new StringBuffer();
+                    StringBuilder responseContent = new StringBuilder();
 
                     URL url = new URL("http://ucras.di.uminho.pt/v1/games/");
                     connection = (HttpURLConnection) url.openConnection();
@@ -113,17 +103,13 @@ public class API {
 
                     if (status > 299) {
                         reader = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
-                        while((line = reader.readLine()) != null) {
-                            responseContent.append(line);
-                        }
-                        reader.close();
                     } else {
                         reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                        while((line = reader.readLine()) != null) {
-                            responseContent.append(line);
-                        }
-                        reader.close();
                     }
+                    while((line = reader.readLine()) != null) {
+                        responseContent.append(line);
+                    }
+                    reader.close();
 
                     StringtoJson(responseContent.toString());
                 } catch (IOException | SQLException e) {
