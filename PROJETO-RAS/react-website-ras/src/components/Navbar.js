@@ -48,12 +48,12 @@ function Navbar() {
                         </Link>
                     </li>
                     <li className="nav-item">
-                        <Link to='/iniciarsessao' className="nav-links" onClick={closeMobileMenu}>
+                        <Link to='/auth' className="nav-links" onClick={closeMobileMenu}>
                             Iniciar sessão
                         </Link>
                     </li>
                     <li className="nav-item">
-                        <Link to='/registar' className="nav-links-mobile" onClick={closeMobileMenu}>
+                        <Link to='/auth' className="nav-links-mobile" onClick={closeMobileMenu}>
                             Registar
                         </Link>
                     </li>
