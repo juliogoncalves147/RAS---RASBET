@@ -37,6 +37,16 @@ function Navbar() {
                     <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
                 </div>
                 <ul className={click ? 'nav-menu active' : 'nav-menu'}>
+                     <li className="nav-item">
+                        <Link to='/todos' className="nav-links" onClick={closeMobileMenu}>
+                            Todos
+                        </Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link to='/futebol' className="nav-links" onClick={closeMobileMenu}>
+                            Futebol
+                        </Link>
+                    </li>
                     <li className="nav-item">
                         <Link to='/iniciarsessao' className="nav-links" onClick={closeMobileMenu}>
                             Iniciar sessão
