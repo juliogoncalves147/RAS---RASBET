@@ -4,7 +4,7 @@ import React, { useState } from "react"
 import { Link, useHistory } from "react-router-dom"
 
 export default function (props) {
-  let [authMode, setAuthMode] = useState("signin")
+  let [authMode, setAuthMode] = useState("signup")
 
   const changeAuthMode = () => {
     setAuthMode(authMode === "signin" ? "signup" : "signin")

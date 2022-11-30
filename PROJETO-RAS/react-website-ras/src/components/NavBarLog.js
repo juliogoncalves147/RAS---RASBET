@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import {Button} from './Button';
 import './Navbar.css';
 
-function Navbar() {
+function NavbarLog() {
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
 
@@ -48,17 +48,12 @@ function Navbar() {
                         </Link>
                     </li>
                     <li className="nav-item">
-                        <Link to='/auth' className="nav-links" onClick={closeMobileMenu}>
-                            Iniciar sessão
-                        </Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link to='/authReg' className="nav-links-mobile" onClick={closeMobileMenu}>
-                            Registar
+                        <Link to='/' className="nav-links-mobile" onClick={closeMobileMenu}>
+                            Sair
                         </Link>
                     </li>
                 </ul>
-                {button && <Button path='/authReg' buttonStyle='btn--outline'>Registar</Button>}
+                {button && <Button path='/' buttonStyle='btn--outline'>Sair</Button>}
             </div>
         </nav>
 
@@ -66,4 +61,4 @@ function Navbar() {
   )
 }
 
-export default Navbar
+export default NavbarLog

@@ -12,11 +12,11 @@ function HeroSection() {
         <div className='hero-btns'>
 
           
-            <Button className='btns' buttonStyle='btn--outline' buttonSize='btn--large'>
-                INICIAR SESSÃO
+            <Button path='/auth' className='btns' buttonStyle='btn--outline' buttonSize='btn--large'>
+                ENTRAR
             </Button>
-            <Button className='btns' buttonStyle='btn--primary' buttonSize='btn--large'>
-                REGISTAR
+            <Button path='/consultarjogos' className='btns' buttonStyle='btn--outline' buttonSize='btn--large'>
+                CONSULTAR JOGOS
             </Button>
 
         </div>
