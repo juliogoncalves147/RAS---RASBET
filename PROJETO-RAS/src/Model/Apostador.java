@@ -1,9 +1,21 @@
 package Model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 
 public class Apostador extends Utilizador{
     private double saldo;
+
+    public Apostador(ResultSet userRS) throws SQLException {
+
+        this(userRS.getString("nome"),
+                userRS.getString("id"), userRS.getString("email"),
+                userRS.getString("password"), true,
+                userRS.getDate("dataNascimento"), userRS.getString("idFiscal"),
+                userRS.getString("idCivil"), userRS.getDouble("saldo"));
+
+    }
 
     public Apostador(String nome, String nomeutilizador, String email, String password, boolean isLogged, Date dataNascimento, String numeroidfical, String numeroidcivil, double saldo) {
         super(nome, nomeutilizador, email, password, isLogged, dataNascimento, numeroidfical, numeroidcivil);

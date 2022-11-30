@@ -1,5 +1,6 @@
 package Model;
 
+import java.sql.ResultSet;
 import java.util.*;
 
 public class Utilizador {

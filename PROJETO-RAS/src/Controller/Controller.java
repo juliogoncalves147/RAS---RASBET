@@ -48,8 +48,6 @@ public class Controller {
 
     private Utilizador login() {
 
-
-       // this.scan.nextLine();
         this.view.line("Username: ");
         String username = this.scan.nextLine();
         this.view.line("Password: ");
@@ -60,37 +58,27 @@ public class Controller {
                 "' AND password = '" + password + "'");
         if (userRS != null) {
             try {
+                Utilizador user = null;
                 userRS.next();
                 int tipo = userRS.getInt("tipo");
-                Utilizador user = null;
-                if (tipo == 0)
-                    user = new Apostador(userRS.getString("nome"),
-                            userRS.getString("id"), userRS.getString("email"),
-                            userRS.getString("password"), true,
-                            userRS.getDate("dataNascimento"), userRS.getString("idFiscal"),
-                            userRS.getString("idCivil"), userRS.getDouble("saldo"));
-                else if (tipo == 1)
-                    user = new Tecnico(userRS.getString("nome"), userRS.getString("id"),
-                            userRS.getString("email"), userRS.getString("password"),
-                            userRS.getBoolean("logado"), userRS.getDate("dataNascimento"),
-                            userRS.getString("idFiscal"), userRS.getString("idCivil"),
-                            false);
-                else if (tipo == 2)
-                    user = new Especialista(userRS.getString("nome"), userRS.getString("id"),
-                            userRS.getString("email"), userRS.getString("password"),
-                            userRS.getBoolean("logado"), userRS.getDate("dataNascimento"),
-                            userRS.getString("idFiscal"), userRS.getString("idCivil"),
-                            false);
-                else if (tipo == 3)
-                    user = new Administrador(userRS.getString("nome"), userRS.getString("id"),
-                            userRS.getString("email"), userRS.getString("password"),
-                            userRS.getBoolean("logado"), userRS.getDate("dataNascimento"),
-                            userRS.getString("idFiscal"), userRS.getString("idCivil"),
-                            false);
 
+                if (tipo == 0)
+                    user = new Apostador(userRS);
+                else if (tipo == 1)
+                    user = new Tecnico(userRS);
+                else if (tipo == 2)
+                    user = new Especialista(userRS);
+                else if (tipo == 3)
+                    user = new Administrador(userRS);
+                else {
+                    this.view.line("Erro ao ler utilizador da base de dados: Tipo desconhecido!!");
+                    return null;
+                }
+                // Sucesso
                 this.db.update("UPDATE User SET logado = 1 WHERE id = '" + username + "'");
                 this.view.line("Login efetuado com sucesso!");
                 return user;
+
             } catch (Exception e) {
                 System.out.println(e.getMessage());
                 this.view.line("Username ou password errados");
