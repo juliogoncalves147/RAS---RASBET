@@ -39,7 +39,7 @@ export default function (props) {
               />
             </div>
             <div className="d-grid gap-2 mt-3">
-            <Link to="/paginainicial">
+            <Link to="/menuinicial">
               <button type="Submit" className="btn btn-primary">
                 Submeter
               </button>
@@ -124,7 +124,7 @@ export default function (props) {
      
           
           <div className="d-grid gap-2 mt-3">
-            <Link to="/">
+            <Link to="/menuinicial">
             <button type="submit" className="btn btn-primary">
               Submeter
             </button>

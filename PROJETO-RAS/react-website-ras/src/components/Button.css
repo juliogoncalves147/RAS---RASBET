@@ -34,6 +34,16 @@
 
 }
 
+.btn--small {
+    padding: 5px 10px;
+    font-size: 10px;
+    border: transparent;
+}
+.btn--small:hover{
+    color: rgb(29, 46, 201);
+   
+    border: transparent;
+}
 .btn--medium {
     padding: 8px 20px;
     font-size: 20px;

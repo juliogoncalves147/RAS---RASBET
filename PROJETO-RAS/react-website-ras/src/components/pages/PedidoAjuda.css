@@ -1,0 +1,46 @@
+.container{
+    padding-top: 50px;
+    padding-bottom: 50px;
+    color:aqua;
+    background-color: rgb(255, 255, 255);
+}
+
+.containerInterior{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    color:rgb(0, 0, 0);
+    background-color: rgb(241, 241, 241);
+    direction: column;
+    justify-content: center;
+    height: 50vh;
+    border-radius: 20px;
+    padding-bottom: 20px;
+}
+
+.caixaPedido{
+    font-size: 20px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    color:rgb(0, 0, 0);
+    background-color: rgb(241, 241, 241);
+}
+
+.caixaDescrição{
+    color:rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 20px;
+    height: 80%;
+    width: 80%;
+    border-radius: 20px;
+}
+
+.submeterButton{
+    font-size: 15px;
+    padding-top: 20px;
+}
