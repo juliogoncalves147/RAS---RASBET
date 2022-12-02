@@ -10,6 +10,8 @@ export const Button = ({
     path,
     children,
     type,
+    id,
+    odd,
     onClick,
     buttonStyle,
     buttonSize}) => {
@@ -20,6 +22,8 @@ export const Button = ({
         <Link to={path} className='btn-mobile'>
             <button
                 className={`btn ${checkButtonStyle} ${checkButtonSize}`}
+                id={id}
+                odd={odd}
                 onClick={onClick}
                 type={type}>
                 {children}
