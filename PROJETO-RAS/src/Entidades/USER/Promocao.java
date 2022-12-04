@@ -1,15 +1,13 @@
-package Model;
+package Entidades.USER;
 
 public class Promocao {
     private String id;
-    private String texto;
     private String idJogo;
     private double oddMelhorada;
     private String prognostico;
 
-    public Promocao(String id, String texto, String idJogo, double oddMelhorada, String prognostico) {
+    public Promocao(String id, String idJogo, double oddMelhorada, String prognostico) {
         this.id = id;
-        this.texto = texto;
         this.idJogo = idJogo;
         this.oddMelhorada = oddMelhorada;
         this.prognostico = prognostico;
@@ -21,14 +19,6 @@ public class Promocao {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getTexto() {
-        return texto;
-    }
-
-    public void setTexto(String texto) {
-        this.texto = texto;
     }
 
     public String getIdJogo() {
@@ -59,7 +49,7 @@ public class Promocao {
 
     public String toString() {
         return "Promocao [id=" + id + ", idJogo=" + idJogo + ", oddMelhorada=" + oddMelhorada + ", prognostico="
-                + prognostico + ", texto=" + texto + "]";
+                + prognostico + "]";
     }
     
 }

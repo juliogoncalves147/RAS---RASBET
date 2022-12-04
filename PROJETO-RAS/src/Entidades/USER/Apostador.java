@@ -1,4 +1,4 @@
-package Model;
+package Entidades.USER;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -45,33 +45,5 @@ public class Apostador extends Utilizador{
             return true;
         }
         return false;
-    }
-    public void alterarInformacoesPerfil(String nome, String email, String password, String numeroidfical, String numeroidcivil) {
-        // 5TODO Auto-generated method stub
-
-    }
-    public void fazerAposta(int idAposta, double valor) {
-
-    }
-    public void consultarHistoricoApostas() {
-
-    }
-    public void consultarHistoricoTransacoes() {
-
-    }
-    public void depositarDinheiro(double valor) {
-
-    }
-    public boolean levantarDinheiro(double valor) {
-        return false;
-    }
-    public void consultarPromocoes() {
-
-    }
-    public void consultarNotificacoes() {
-
-    }
-    public void fazerPedidoAjuda(String texto) {
-
     }
 }

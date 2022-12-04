@@ -1,4 +1,4 @@
-package Model;
+package Entidades.API;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 

@@ -1,6 +1,4 @@
-package Model;
-
-import Model.EstadoPedido;
+package Entidades.USER;
 
 import java.util.Date;
 

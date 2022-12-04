@@ -1,4 +1,4 @@
-package Model;
+package Entidades.USER;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -9,8 +9,6 @@ import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 public class CurrencyTime {
 

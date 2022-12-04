@@ -103,18 +103,4 @@ public class Menu implements Serializable {
                 "0 - Terminar Sessão"});
         line("Pretende: ");
     }
-
-    public void printOdds(ResultSet odds) throws SQLException {
-        // ResultSet odds = "SELECT * FROM Odds WHERE idJogo='" + idJogo + "'"
-        int i = 1;
-        while(odds.next()) {
-            System.out.println(i + " " + odds.getString("idJogo") + " - "
-                                       + odds.getString("prognostico") + " - "
-                                       + odds.getString("valor"));
-            i++;
-        }
-
-        odds.beforeFirst();
-    }
-
 }

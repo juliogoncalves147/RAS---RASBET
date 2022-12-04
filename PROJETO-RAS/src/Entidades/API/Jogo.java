@@ -1,4 +1,4 @@
-package Model;
+package Entidades.API;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -13,6 +13,7 @@ public class Jogo {
     private Boolean completed;
     private String scores;
     private List<Bookmaker> bookmakers;
+    private String progCorreto;
 
     public Jogo(){
         this.id = null;
@@ -88,6 +89,14 @@ public class Jogo {
 
     public void setBookmakers(List<Bookmaker> bookmakers) {
         this.bookmakers = bookmakers;
+    }
+
+    public String getProgCorreto() {
+        return progCorreto;
+    }
+
+    public void setProgCorreto(String progCorreto) {
+        this.progCorreto = progCorreto;
     }
 
     @Override

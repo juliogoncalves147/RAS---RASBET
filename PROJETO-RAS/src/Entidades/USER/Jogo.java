@@ -1,9 +1,7 @@
-package Model;
+package Entidades.USER;
 
-import javax.swing.text.DateFormatter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.LinkedHashMap;
 
 public class Jogo {
@@ -11,12 +9,14 @@ public class Jogo {
     private EstadoJogo estado;
     private LocalDateTime data;
     private LinkedHashMap<String, Double> odds;
+    private LinkedHashMap<String, Double> promocoes;
 
-    public Jogo(String id, EstadoJogo estado, LocalDateTime data, LinkedHashMap<String, Double> odds) {
+    public Jogo(String id, EstadoJogo estado, LocalDateTime data, LinkedHashMap<String, Double> odds, LinkedHashMap<String, Double> promocoes) {
         this.id = id;
         this.estado = estado;
         this.data = data;
         this.odds = odds;
+        this.promocoes = promocoes;
     }
 
     public String getId() {
@@ -43,10 +43,18 @@ public class Jogo {
         return data;
     }
 
+    public void setPromocoes(LinkedHashMap<String, Double> promocoes) {
+        this.promocoes = promocoes;
+    }
+
+    public LinkedHashMap<String, Double> getPromocoes() {
+        return promocoes;
+    }
+
     public String toString(){
         //TODO: Mudar para o formato correto da data e das odds de acordo com a moeda
         DateTimeFormatter df = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
-        return "(" + this.estado + ") - Data: " + this.data.format(df) + "----- Odds: " + this.odds;
+        return "(" + this.estado + ") - Data: " + this.data.format(df) + "----- Odds: " + this.odds + "----- Promocoes: " + this.promocoes;
     }
 }

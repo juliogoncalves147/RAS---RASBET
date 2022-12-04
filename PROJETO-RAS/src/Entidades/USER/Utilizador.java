@@ -1,9 +1,9 @@
-package Model;
+package Entidades.USER;
 
 import java.sql.ResultSet;
 import java.util.*;
 
-public class Utilizador {
+public abstract class Utilizador {
     private String nome;
     private String nomeutilizador;
     private String email;
