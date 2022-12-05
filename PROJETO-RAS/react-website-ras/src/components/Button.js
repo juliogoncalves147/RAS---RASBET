@@ -12,7 +12,7 @@ export const Button = ({
     type,
     id,
     odd,
-    onClick,
+    handlerClick,
     buttonStyle,
     buttonSize}) => {
     const checkButtonStyle = STYLES.includes(buttonStyle) ? buttonStyle : STYLES[0];
@@ -24,7 +24,7 @@ export const Button = ({
                 className={`btn ${checkButtonStyle} ${checkButtonSize}`}
                 id={id}
                 odd={odd}
-                onClick={onClick}
+                onClick={()=>handlerClick(id,odd)}
                 type={type}>
                 {children}
             </button>
