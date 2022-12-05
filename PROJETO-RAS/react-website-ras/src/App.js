@@ -10,6 +10,7 @@ import AuthReg from './AuthReg';
 import PaginaInicial from './PaginaInicial';
 import PedidoAjuda from './components/pages/PedidoAjuda';
 import Principal from './components/pages/Principal';
+import EditarPerfil from './components/pages/EditarPerfil';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route exact path='/paginainicial' element = {<PaginaInicial/>} />
         <Route exact path='/pedidoajuda' element = {<PedidoAjuda/>} />
         <Route exact path='/menuinicial' element = {<Principal/>} />
+        <Route exact path='/editarPerfil' element = {<EditarPerfil/>} />
     </Routes>
     </Router>
     </>

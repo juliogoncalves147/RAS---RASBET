@@ -43,6 +43,11 @@ function NavbarLog() {
                         </Link>
                     </li>
                     <li className="nav-item">
+                        <Link to='/editarPerfil' className="nav-links" onClick={closeMobileMenu}>
+                            EditarPerfil
+                        </Link>
+                    </li>
+                    <li className="nav-item">
                         <Link to='/futebol' className="nav-links" onClick={closeMobileMenu}>
                             Futebol
                         </Link>
