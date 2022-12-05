@@ -1,0 +1,91 @@
+.float-container {
+    border: 3px solid #fff;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+}
+
+.float-child {
+    width: 50%;
+    height: 90%;
+    font-family: arial;
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    height: 75%;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-radius: 10px;
+    display: inline-block;
+    background-color: rgb(219, 219, 219);
+    
+} 
+
+.opcoes1 {
+    font-size: 20px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    color:rgb(0, 0, 0);
+    
+  
+}
+
+.opcoes {
+    font-size: 20px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    color:rgb(0, 0, 0);
+  
+   
+}
+
+.info{
+    text-align: left;
+    display: flex;      
+    color:rgb(0, 0, 0);
+
+    
+    
+}
+
+.div1{
+display: flex;
+flex-direction: column;
+width: 50%;
+align-items: flex-end;
+padding-right: 10px;
+padding-top: 1%;
+
+}
+
+.div2{
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+padding-left: 5px;
+width: 50%;
+
+}
+
+.teste{
+    display: flex;
+    width: 100%;
+}
+
+.perfil{
+    display:flex;
+    flex-direction: column;
+    align-items: left;
+    color:rgb(0, 0, 0)
+    
+}
+
+
+.submeter{
+    font-size: 15px;
+    padding-top: 20px;
+}
