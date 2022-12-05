@@ -3,7 +3,6 @@ import React, {useState} from "react";
 import { Button } from "../Button";
 import Footer from "../Footer";
 import Navbar from "../NavBarLog";
-import useFetch from "../useFetch";
 import "./Principal.css";
 
 
@@ -12,7 +11,7 @@ const PaginaInicial = () => {
   const [myArray, updateMyArray] = useState([]);
   const [myOdds, updateMyOdds] = useState([]);
   
-  const {data, loading, error} = useFetch("http://ucras.di.uminho.pt/v1/games/");
+  //const {data, loading, error} = useFetch("http://ucras.di.uminho.pt/v1/games/");
     //const handleClick = () => setSelecao(!selecao);
 
 const handlerCLick = (id, odd) => {

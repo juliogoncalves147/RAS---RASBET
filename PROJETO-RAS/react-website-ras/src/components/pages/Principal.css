@@ -90,7 +90,7 @@
     font-size: 20px;
     align-items: center;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     color:rgb(0, 0, 0);
 }
 
@@ -190,7 +190,7 @@
     border-radius: 10px;    
     align-items: center;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     text-align: center;
     display: inline-block;
     margin-left: 20px;
