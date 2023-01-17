@@ -31,7 +31,7 @@ public class DAOAPI {
                 //Exemplos de resultados dependendo do desporto:
                 // 1 – 1 Futebol; 45 - MotoGP; 6,5-4,7-2,7- Ténis
                 //LIstresultados = new int[];
-                String[] resultados = jogo.getScores().split("-");
+                String[] resultados = jogo.getScores().split("x");
                 int home = Integer.parseInt(resultados[0]);
                 int away = Integer.parseInt(resultados[1]);
 
@@ -73,18 +73,9 @@ public class DAOAPI {
                 else
                     preparedStmt.setString(5, jogo.getProgCorreto());
 
-
-                //Replace faz com que elimine a linha antiga e coloque uma nova. Se não existir, cria uma linha.
-                //Ou seja, se existir, o valor vai ser 2.
-
-                //Obter Jogo
-                //Verificar se o estado do jogo da DB é diferente em relação ao que está na api
-                //Se for diferente, atualizar o estado do jogo na DB e adicionar à lista dos jAcabados
-                //Se for igual, verificar se as odds são diferentes
-                //Se sim, adicionar à lista dos jNotificados
-
-
-
+                if (Objects.equals(id, "ad72eab7e549220ad0907a783a3c6b77")){
+                    System.out.println("aqui");
+                }
 
                 Entidades.USER.Jogo jogoDB = getJogo(id);
                 if (jogoDB != null) {
@@ -109,8 +100,6 @@ public class DAOAPI {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
-
 
             putOdd(conn, id, homeTeam, homeOdd);
             putOdd(conn, id, awayTeam, awayOdd);
@@ -147,7 +136,7 @@ public class DAOAPI {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return null;
+        return j;
     }
 
     private void putOdd(Connection conn, String id, String team, double odd)  {

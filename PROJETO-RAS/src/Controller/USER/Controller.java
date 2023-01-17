@@ -94,7 +94,8 @@ public class Controller {
                 opt = this.scan.nextInt();
                 if (opt < min || opt > max) this.view.line("Opção inválida, tente novamente.");
             } catch (InputMismatchException e) {
-                this.view.line("Opção inválida, tente novamente.");
+                this.view.line("Opção inválida, tente novamente.\n");
+                this.view.line("Opção: ");
             }
             this.scan.nextLine();
         }

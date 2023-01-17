@@ -73,6 +73,7 @@ public class ControllerAPI {
 
                 try {
                     List<Jogo> jogos = StringtoJson(responseContent.toString());
+                    System.out.println(jogos);
                     AbstractMap.SimpleEntry<List<Jogo>,List<Jogo>> jAlterados = dao.updateJogos(jogos);
                     List<Boletim> vencedores = dao.updateApostas(jAlterados.getKey());
                     dao.Notifica(jAlterados.getValue());

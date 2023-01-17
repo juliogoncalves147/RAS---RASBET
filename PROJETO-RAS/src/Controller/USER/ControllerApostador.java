@@ -39,9 +39,10 @@ public class ControllerApostador extends Controller {
                         }
 
                         this.view.optionsMenu(new String[]{"1 - Seguir Jogo", "2 - Deixar de Seguir Jogo", "0 - Voltar"});
+                        this.view.line("Insira a opção: ");
                         int opcao2 = this.scanOption(0, 2);
                         if (opcao2 == 1) {
-                            this.view.line("Qual o jogo que deseja seguir? (0 para voltar)");
+                            this.view.line("Qual o jogo que deseja seguir? (0 para voltar): ");
                             int jogo = this.scanOption(0, jogos.size());
                             if (jogo!= 0) {
                                 this.db.seguirJogo(this.user.getNomeutilizador(), jogos.get(jogo - 1).getId());
@@ -49,8 +50,11 @@ public class ControllerApostador extends Controller {
                             }
                         }
                         else if (opcao2 == 2) {
-                            this.view.line("Qual o jogo que deseja deixar de seguir? (0 para voltar)");
+                            this.view.line("Qual o jogo que deseja deixar de seguir? (0 para voltar): ");
                             jogos = this.db.getJogosSeguidos(this.user.getNomeutilizador());
+                            for (int i = 0; i < jogos.size(); i++) {
+                                this.view.line((i + 1) + " - " + jogos.get(i).toString() + "\n");
+                            }
                             int jogo = this.scanOption(0, jogos.size());
                             if (jogo!= 0) {
                                 this.db.deixarSeguirJogo(this.user.getNomeutilizador(), jogos.get(jogo - 1).getId());
