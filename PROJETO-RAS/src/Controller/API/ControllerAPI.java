@@ -13,14 +13,14 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.AbstractMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.regex.Pattern;
 
 public class ControllerAPI {
     private static HttpURLConnection connection;
-    private DAOAPI dao;
+    private final DAOAPI dao;
 
     public ControllerAPI() {
         dao = new DAOAPI();
@@ -73,8 +73,9 @@ public class ControllerAPI {
 
                 try {
                     List<Jogo> jogos = StringtoJson(responseContent.toString());
-                    List<Jogo> jAcabados = dao.updateJogos(jogos);
-                    List<Boletim> vencedores = dao.updateApostas(jAcabados);
+                    AbstractMap.SimpleEntry<List<Jogo>,List<Jogo>> jAlterados = dao.updateJogos(jogos);
+                    List<Boletim> vencedores = dao.updateApostas(jAlterados.getKey());
+                    dao.Notifica(jAlterados.getValue());
                     dao.updateUsers(vencedores);
                 } catch (JsonProcessingException | SQLException e) {
                     throw new RuntimeException(e);

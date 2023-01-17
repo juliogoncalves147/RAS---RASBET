@@ -26,4 +26,8 @@ public class Transacao {
     public TipoMovimento getTipo() {
         return tipoMovimento;
     }
+
+    public String toString() {
+        return data + " | Tipo: " + tipoMovimento + " | Valor: " + valor;
+    }
 }

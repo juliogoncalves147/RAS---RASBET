@@ -2,13 +2,12 @@ package DAO.USER;
 
 import Entidades.USER.*;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.AbstractMap;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class ApostadorDAO extends DAO{
 
@@ -71,6 +70,25 @@ public class ApostadorDAO extends DAO{
             System.err.println(e.getMessage());
         }
         return boletins;
+    }
+
+    public void addObserver(String userID, String gameID){
+        try{
+            //verificar se já existe
+            PreparedStatement p = this.getConn().prepareStatement("SELECT * FROM Observar WHERE idUser = ? AND idJogo = ?");
+            p.setString(1, userID);
+            p.setString(2, gameID);
+            ResultSet rs = p.executeQuery();
+            if(rs.next()) return;
+
+            p = this.getConn().prepareStatement("INSERT INTO Observar VALUES (?, ?)");
+            p.setString(1, userID);
+            p.setString(2, gameID);
+            p.executeUpdate();
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 
     private List<Prognostico> getProgs(String id) {
@@ -138,5 +156,29 @@ public class ApostadorDAO extends DAO{
 
     public boolean leuNotificacao(String idNotificacao, String idUser) {
         return this.update("INSERT INTO NotificacaoLida VALUES ('" + idNotificacao + "', '" + idUser + "')");
+    }
+
+    public void seguirJogo(String nomeutilizador, String id) {
+        this.update("INSERT INTO Observar VALUES ('" + nomeutilizador + "', '" + id + "')");
+    }
+
+    public List<Jogo> getJogosSeguidos(String nomeutilizador) {
+        ResultSet rs = this.query("SELECT * FROM Jogo WHERE id IN (SELECT idJogo FROM Observar WHERE idUser = '" + nomeutilizador + "')");
+        List<Jogo> jogos = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                jogos.add(new Jogo(rs.getString("id"), EstadoJogo.values()[rs.getInt("estado")],
+                        LocalDateTime.parse(rs.getString("data"), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
+                        null, new LinkedHashMap<>()));
+            }
+        } catch (Exception e) {
+            System.err.println("Got an exception!");
+            System.err.println(e.getMessage());
+        }
+        return jogos;
+    }
+
+    public void deixarSeguirJogo(String nomeutilizador, String id) {
+        this.update("DELETE FROM Observar WHERE idUser = '" + nomeutilizador + "' AND idJogo = '" + id + "'");
     }
 }

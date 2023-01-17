@@ -4,8 +4,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashMap;
 
-public class Jogo {
-    private String id;
+public class Jogo{
+    private final String id;
     private EstadoJogo estado;
     private LocalDateTime data;
     private LinkedHashMap<String, Double> odds;
@@ -41,10 +41,6 @@ public class Jogo {
 
     public LocalDateTime getData() {
         return data;
-    }
-
-    public void setPromocoes(LinkedHashMap<String, Double> promocoes) {
-        this.promocoes = promocoes;
     }
 
     public LinkedHashMap<String, Double> getPromocoes() {

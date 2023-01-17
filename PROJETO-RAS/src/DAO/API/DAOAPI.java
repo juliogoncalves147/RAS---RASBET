@@ -4,8 +4,11 @@ import Entidades.API.Bookmaker;
 import Entidades.API.Jogo;
 import Entidades.USER.Boletim;
 import Entidades.USER.EstadoBoletim;
+import Entidades.USER.EstadoJogo;
 
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class DAOAPI {
@@ -20,11 +23,13 @@ public class DAOAPI {
         }
     }
 
-    public List<Jogo> updateJogos(List<Jogo> jogos) {
+    public AbstractMap.SimpleEntry<List<Jogo>,List<Jogo>> updateJogos(List<Jogo> jogos) {
         List<Jogo> jAcabados = new ArrayList<>();
+        List<Jogo> jNotificar = new ArrayList<>();
         for (Jogo jogo : jogos) {
             if (jogo.getCompleted()){
-                //Exemplos de scores dependendo do desporto: 1-1 Futebol; 45 - MotoGP; 6,5-4,7-2,7- Ténis
+                //Exemplos de resultados dependendo do desporto:
+                // 1 – 1 Futebol; 45 - MotoGP; 6,5-4,7-2,7- Ténis
                 //LIstresultados = new int[];
                 String[] resultados = jogo.getScores().split("-");
                 int home = Integer.parseInt(resultados[0]);
@@ -49,6 +54,14 @@ public class DAOAPI {
             String score = jogo.getScores();
             String query = "REPLACE INTO Jogo VALUES ( ? , 'Futebol', ? ,  ? , ?, ?) ";
 
+            Bookmaker bookmaker = jogo.getBookmakers().get(0);
+            String homeTeam = bookmaker.getMarkets().get(0).getOutcomes().get(1).getName();
+            String awayTeam = bookmaker.getMarkets().get(0).getOutcomes().get(0).getName();
+            String draw = bookmaker.getMarkets().get(0).getOutcomes().get(2).getName();
+            double homeOdd = bookmaker.getMarkets().get(0).getOutcomes().get(1).getPrice();
+            double awayOdd = bookmaker.getMarkets().get(0).getOutcomes().get(0).getPrice();
+            double drawOdd = bookmaker.getMarkets().get(0).getOutcomes().get(2).getPrice();
+
             try {
                 PreparedStatement preparedStmt = conn.prepareStatement(query);
                 preparedStmt.setString(1, id);
@@ -61,27 +74,80 @@ public class DAOAPI {
                     preparedStmt.setString(5, jogo.getProgCorreto());
 
 
-                //Replace faz com que elimine a linha antiga e coloque uma nova. Se não existir, cria uma nova linha.
+                //Replace faz com que elimine a linha antiga e coloque uma nova. Se não existir, cria uma linha.
                 //Ou seja, se existir, o valor vai ser 2.
+
+                //Obter Jogo
+                //Verificar se o estado do jogo da DB é diferente em relação ao que está na api
+                //Se for diferente, atualizar o estado do jogo na DB e adicionar à lista dos jAcabados
+                //Se for igual, verificar se as odds são diferentes
+                //Se sim, adicionar à lista dos jNotificados
+
+
+
+
+                Entidades.USER.Jogo jogoDB = getJogo(id);
+                if (jogoDB != null) {
+                    if (jogoDB.getEstado().ordinal() != estado) {
+                        preparedStmt.executeUpdate();
+                        jAcabados.add(jogo);
+                    }
+                    else {
+                        LinkedHashMap<String, Double> odds = jogoDB.getOdds();
+                        if (odds.get(homeTeam) != homeOdd || odds.get(awayTeam) != awayOdd || odds.get(draw) != drawOdd) {
+                            jNotificar.add(jogo);
+                            break;
+                        }
+                    }
+                }
+                else {
+                    preparedStmt.executeUpdate();
+                }
+
                 if (preparedStmt.executeUpdate() == 2 && estado == 1)
                     jAcabados.add(jogo);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
 
-            Bookmaker bookmaker = jogo.getBookmakers().get(0);
-            String homeTeam = bookmaker.getMarkets().get(0).getOutcomes().get(1).getName();
-            String awayTeam = bookmaker.getMarkets().get(0).getOutcomes().get(0).getName();
-            String draw = bookmaker.getMarkets().get(0).getOutcomes().get(2).getName();
-            double homeOdd = bookmaker.getMarkets().get(0).getOutcomes().get(1).getPrice();
-            double awayOdd = bookmaker.getMarkets().get(0).getOutcomes().get(0).getPrice();
-            double drawOdd = bookmaker.getMarkets().get(0).getOutcomes().get(2).getPrice();
+
 
             putOdd(conn, id, homeTeam, homeOdd);
             putOdd(conn, id, awayTeam, awayOdd);
             putOdd(conn, id, draw, drawOdd);
         }
-        return jAcabados;
+        return new AbstractMap.SimpleEntry<>(jAcabados, jNotificar);
+    }
+
+    private Entidades.USER.Jogo getJogo(String id) {
+        Entidades.USER.Jogo j = null;
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/projeto_ras", "ras", "ras");
+            PreparedStatement preparedStmt = conn.prepareStatement("SELECT * FROM Jogo WHERE id = ?");
+            preparedStmt.setString(1, id);
+            ResultSet rs = preparedStmt.executeQuery();
+            if (rs.next()) {
+                j = new Entidades.USER.Jogo(rs.getString("id"), EstadoJogo.values()[rs.getInt("estado")],
+                        LocalDateTime.parse(rs.getString("data"), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), null, new LinkedHashMap<>());
+                ResultSet odds = null;
+                try {
+                    Statement statement = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                    odds = statement.executeQuery("SELECT * FROM Odds WHERE idJogo = '" + j.getId() + "'");
+                } catch (Exception e) {
+                    System.err.println("Got an exception! ");
+                    System.err.println(e.getMessage());
+                }
+
+                LinkedHashMap<String, Double> oddsMap = new LinkedHashMap<>();
+                while (odds != null && odds.next()) {
+                    oddsMap.put(odds.getString("prognostico"), odds.getDouble("valor"));
+                }
+                j.setOdds(oddsMap);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 
     private void putOdd(Connection conn, String id, String team, double odd)  {
@@ -196,6 +262,29 @@ public class DAOAPI {
                 p.setString(2, b.getIdUser());
                 p.setString(3, "Parabéns! Ganhou " + b.getGanho() + "€ com o boletim:\n" + b);
             } catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void Notifica(List<Jogo> value) {
+        //verificar se há observadores para cada jogo
+        //se sim, enviar notificação
+
+        for (Jogo j : value) {
+            try {
+                PreparedStatement p = conn.prepareStatement("SELECT * FROM Observar WHERE idJogo = ?");
+                p.setString(1, j.getId());
+                ResultSet rs = p.executeQuery();
+                while (rs.next()) {
+                    p = conn.prepareStatement("INSERT INTO Notificacao VALUES (?, 0, ?, ?, ?)");
+                    p.setString(1, UUID.randomUUID().toString());
+                    p.setString(2, rs.getString("idUser"));
+                    p.setString(3, "As odds do jogo " + j.getHomeTeam() + " vs " + j.getAwayTeam() + "foram alteradas!");
+                    p.setString(4, j.getId());
+                    p.executeUpdate();
+                }
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         }

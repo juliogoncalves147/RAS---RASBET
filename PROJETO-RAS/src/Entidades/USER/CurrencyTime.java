@@ -6,12 +6,12 @@ import org.json.JSONObject;
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 public class CurrencyTime {
-
     private double valueCurrency;
     private String timezone;
     private String currency;
@@ -25,12 +25,11 @@ public class CurrencyTime {
 
         try {
             JSONObject json = readJsonFromUrl("http://www.geoplugin.net/json.gp?base_currency=EUR");
-            Double valueCurrency = json.getDouble("geoplugin_currencyConverter");
+            double valueCurrency = json.getDouble("geoplugin_currencyConverter");
             this.valueCurrency = valueCurrency != 0 ? valueCurrency : 1;
             this.timezone = json.get("geoplugin_timezone").toString();
             this.currency = json.get("geoplugin_currencySymbol").toString();
-        } catch (IOException e) {
-        }
+        } catch (IOException ignored) {}
     }
 
     public double convertCurrency(double value) {
@@ -51,14 +50,10 @@ public class CurrencyTime {
     }
 
     public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
-        InputStream is = new URL(url).openStream();
-        try {
-            BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+        try (InputStream is = new URL(url).openStream()) {
+            BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
             String jsonText = readAll(rd);
-            JSONObject json = new JSONObject(jsonText);
-            return json;
-        } finally {
-            is.close();
+            return new JSONObject(jsonText);
         }
     }
 

@@ -29,13 +29,33 @@ public class ControllerApostador extends Controller {
             opcao = this.scanOption(0, 10);
             switch (opcao) {
                 case 1 -> {
-                    //Vê os jogos
+                    //Observa os jogos
                     this.view.subheader("Jogos", this.user.getNomeutilizador() + " - " + this.user.getSaldo() + this.currencyTime.getCurrency());
                     String desporto = this.getDesporto();
                     if (desporto != null) {
                         List<Jogo> jogos = this.db.getJogos(desporto);
                         for (int i = 0; i < jogos.size(); i++) {
                             this.view.line((i + 1) + " - " + jogos.get(i).toString() + "\n");
+                        }
+
+                        this.view.optionsMenu(new String[]{"1 - Seguir Jogo", "2 - Deixar de Seguir Jogo", "0 - Voltar"});
+                        int opcao2 = this.scanOption(0, 2);
+                        if (opcao2 == 1) {
+                            this.view.line("Qual o jogo que deseja seguir? (0 para voltar)");
+                            int jogo = this.scanOption(0, jogos.size());
+                            if (jogo!= 0) {
+                                this.db.seguirJogo(this.user.getNomeutilizador(), jogos.get(jogo - 1).getId());
+                                this.view.line("Jogo seguido com sucesso!");
+                            }
+                        }
+                        else if (opcao2 == 2) {
+                            this.view.line("Qual o jogo que deseja deixar de seguir? (0 para voltar)");
+                            jogos = this.db.getJogosSeguidos(this.user.getNomeutilizador());
+                            int jogo = this.scanOption(0, jogos.size());
+                            if (jogo!= 0) {
+                                this.db.deixarSeguirJogo(this.user.getNomeutilizador(), jogos.get(jogo - 1).getId());
+                                this.view.line("Jogo deixado de seguir com sucesso!");
+                            }
                         }
                     }
                 }
@@ -122,7 +142,12 @@ public class ControllerApostador extends Controller {
         if (tipo == TipoMovimento.DEPOSITO)
             this.user.setSaldo(this.user.getSaldo() + valor);
         else
-            this.user.setSaldo(this.user.getSaldo() - valor);
+            try {
+                this.user.setSaldo(this.user.getSaldo() - valor);
+            } catch (Exception e) {
+                this.view.line("Saldo insuficiente!");
+                return;
+            }
 
         this.db.movimento(this.user.getNomeutilizador(), tipo, this.user.getSaldo(), valor);
         this.view.line(tipo + " efetuado com sucesso!");
@@ -179,6 +204,10 @@ public class ControllerApostador extends Controller {
                     this.view.line("Qual a aposta? 0 para voltar");
                     String prognostico = this.scan.nextLine();
                     if (prognostico.equals("0")) break;
+                    else if(boletim.size() == 20) {
+                        this.view.line("Não pode apostar em mais de 20 jogos!");
+                        break;
+                    }
                     else if ((jogo.getEstado() == EstadoJogo.ABERTO || jogo.getEstado() == EstadoJogo.ACORRER)
                             && jogo.getOdds().get(prognostico) != null &&
                             this.boletim.stream().findAny().filter(b -> Objects.equals(b.getKey().getId(), jogo.getId())).orElse(null) == null) {
