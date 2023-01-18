@@ -256,6 +256,9 @@ public class ControllerApostador extends Controller {
             return;
         }
         this.db.insereBoletim(this.user.getNomeutilizador(), montante, this.boletim);
+        for (AbstractMap.Entry<Jogo, String> b : this.boletim) {
+            this.db.seguirJogo(this.user.getNomeutilizador(), b.getKey().getId());
+        }
         this.user.setSaldo(this.user.getSaldo() - montante);
         this.view.line("Boletim inserido com sucesso!");
         this.boletim.clear();
