@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 8.0.31, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.29, for Linux (x86_64)
 --
 -- Host: localhost    Database: projeto_ras
 -- ------------------------------------------------------
@@ -94,7 +94,7 @@ CREATE TABLE `Jogo` (
 
 LOCK TABLES `Jogo` WRITE;
 /*!40000 ALTER TABLE `Jogo` DISABLE KEYS */;
-INSERT INTO `Jogo` VALUES ('0c33b89a2f86957ebbe2584ff87754b2','Futebol','2022-12-28 15:30:00',2,NULL,NULL),('282fed58a147325e5b0afffcaa1a0e87','Futebol','2022-12-28 15:30:00',3,NULL,NULL),('3374a5219c3d6f050bd3109903b679c4','Futebol','2022-12-28 15:30:00',0,NULL,NULL),('873b384613f3e472f7f6078760d66f5c','Futebol','2022-12-28 15:30:00',0,NULL,NULL),('923f451c2663e29d50cdb0027ab20ea7','Futebol','2022-12-28 15:30:00',0,NULL,NULL),('94f9a296ef2f0a2f72553baf8b79741b','Futebol','2022-12-28 15:30:00',0,NULL,NULL),('e913fe08c63882e6675a3137d2aa2260','Futebol','2022-12-28 15:30:00',0,NULL,NULL),('ec2f72299349bba6d9e7e979d0e7d6d8','Futebol','2022-12-28 15:30:00',0,NULL,NULL),('f03db53acb1492a8930663127323502e','Futebol','2022-12-28 15:30:00',0,NULL,NULL);
+INSERT INTO `Jogo` VALUES ('01f7c8123fe4ab268ddf4d90bf22bcae','Futebol','2023-01-21 17:00:00',0,NULL,NULL),('0c33b89a2f86957ebbe2584ff87754b2','Futebol','2022-12-28 15:30:00',2,NULL,NULL),('0d660333cea680040744c67e9cd77534','Futebol','2023-01-16 19:01:12',1,'2x0','Estoril'),('282fed58a147325e5b0afffcaa1a0e87','Futebol','2022-12-28 15:30:00',3,NULL,NULL),('3374a5219c3d6f050bd3109903b679c4','Futebol','2022-12-28 15:30:00',0,NULL,NULL),('44ef1caee7739164c7e52a771a658b4c','Futebol','2023-01-21 20:30:00',0,NULL,NULL),('522b83747b682421bde9063e6d923cc9','Futebol','2023-01-22 20:30:00',0,NULL,NULL),('52937650c1f4edbce02009268a033498','Futebol','2023-01-20 21:15:00',0,NULL,NULL),('59d90eb97cea82f8adb63799b09a6e07','Futebol','2023-01-23 20:15:00',0,NULL,NULL),('7fc7f4e73a187a777be3954f758e9577','Futebol','2023-01-16 21:15:06',1,'2x1','Gil Vicente'),('873b384613f3e472f7f6078760d66f5c','Futebol','2022-12-28 15:30:00',0,NULL,NULL),('8b300830a0ebd20cee78596230305039','Futebol','2023-01-22 15:30:00',0,NULL,NULL),('8f1568cea6b0d4db20ef3bb0aaa54f61','Futebol','2023-01-21 15:30:00',0,NULL,NULL),('923f451c2663e29d50cdb0027ab20ea7','Futebol','2022-12-28 15:30:00',0,NULL,NULL),('93e4f30c5f066fd35e1fbce9fac715c1','Futebol','2023-01-22 18:00:00',0,NULL,NULL),('94f9a296ef2f0a2f72553baf8b79741b','Futebol','2022-12-28 15:30:00',0,NULL,NULL),('94f9f4d2245188d30d7429ddad9178b1','Futebol','2023-01-15 15:33:01',1,'1x1','Arouca'),('ad72eab7e549220ad0907a783a3c6b77','Futebol','2023-01-15 18:02:34',1,'2x2','Sporting Lisbon'),('bce78d6897dc1da6e3bbda794b0751ca','Futebol','2023-01-20 19:00:00',0,NULL,NULL),('be6439e02cf1993457751f2e4e6c1d74','Futebol','2023-01-15 20:31:28',1,'4x1','FC Porto'),('e913fe08c63882e6675a3137d2aa2260','Futebol','2022-12-28 15:30:00',0,NULL,NULL),('ec2f72299349bba6d9e7e979d0e7d6d8','Futebol','2022-12-28 15:30:00',0,NULL,NULL),('f03db53acb1492a8930663127323502e','Futebol','2022-12-28 15:30:00',0,NULL,NULL);
 /*!40000 ALTER TABLE `Jogo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -123,7 +123,7 @@ CREATE TABLE `Notificacao` (
 
 LOCK TABLES `Notificacao` WRITE;
 /*!40000 ALTER TABLE `Notificacao` DISABLE KEYS */;
-INSERT INTO `Notificacao` VALUES ('22a830fb-504e-4ea4-a929-76a0b60724e3',_binary '1',NULL,'   ','danibala23'),('3db32bd4-c468-4ac2-94c0-c6921d7b06dd',_binary '0','cento9enta','O seu pedido de ajuda foi respondido com sucesso, aceda ao mesmo através da sua area de notificações','grodd'),('41978b25-2bd3-4ee2-9df0-d645a17ee0ec',_binary '0','cento9enta','Olá','danibala23'),('495bae05-b150-4511-85e8-fac6f7514004',_binary '1',NULL,'promoção no boavista porto','danibala23'),('654e4fd1-f6b3-4d8d-bd73-b392eeb03fe9',_binary '1',NULL,'aproveita','danibala23'),('844ba359-1cbf-4fcd-a58d-c71ad3be6ca0',_binary '1',NULL,'sss','danibala23'),('efd08369-9390-4544-9c44-6f5901b3ca13',_binary '0','cento9enta','O seu pedido de ajuda foi respondido com sucesso, aceda ao mesmo através da sua area de notificações','grodd');
+INSERT INTO `Notificacao` VALUES ('0c662f44-956a-4181-8227-76705c0b956b',_binary '0','cento9enta','As odds do jogo Benfica vs Sporting Lisbonforam alteradas!','ad72eab7e549220ad0907a783a3c6b77'),('22a830fb-504e-4ea4-a929-76a0b60724e3',_binary '1',NULL,'   ','danibala23'),('3db32bd4-c468-4ac2-94c0-c6921d7b06dd',_binary '0','cento9enta','O seu pedido de ajuda foi respondido com sucesso, aceda ao mesmo através da sua area de notificações','grodd'),('41978b25-2bd3-4ee2-9df0-d645a17ee0ec',_binary '0','cento9enta','Olá','danibala23'),('495bae05-b150-4511-85e8-fac6f7514004',_binary '1',NULL,'promoção no boavista porto','danibala23'),('654e4fd1-f6b3-4d8d-bd73-b392eeb03fe9',_binary '1',NULL,'aproveita','danibala23'),('844ba359-1cbf-4fcd-a58d-c71ad3be6ca0',_binary '1',NULL,'sss','danibala23'),('efd08369-9390-4544-9c44-6f5901b3ca13',_binary '0','cento9enta','O seu pedido de ajuda foi respondido com sucesso, aceda ao mesmo através da sua area de notificações','grodd');
 /*!40000 ALTER TABLE `Notificacao` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -154,6 +154,33 @@ LOCK TABLES `NotificacaoLida` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `Observar`
+--
+
+DROP TABLE IF EXISTS `Observar`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `Observar` (
+  `idUser` varchar(255) NOT NULL,
+  `idJogo` varchar(255) NOT NULL,
+  PRIMARY KEY (`idUser`,`idJogo`),
+  KEY `idJogo` (`idJogo`),
+  CONSTRAINT `Observar_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `User` (`id`),
+  CONSTRAINT `Observar_ibfk_2` FOREIGN KEY (`idJogo`) REFERENCES `Jogo` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Observar`
+--
+
+LOCK TABLES `Observar` WRITE;
+/*!40000 ALTER TABLE `Observar` DISABLE KEYS */;
+INSERT INTO `Observar` VALUES ('cento9enta','f03db53acb1492a8930663127323502e');
+/*!40000 ALTER TABLE `Observar` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `Odds`
 --
 
@@ -175,7 +202,7 @@ CREATE TABLE `Odds` (
 
 LOCK TABLES `Odds` WRITE;
 /*!40000 ALTER TABLE `Odds` DISABLE KEYS */;
-INSERT INTO `Odds` VALUES ('0c33b89a2f86957ebbe2584ff87754b2','Boavista Porto',3),('0c33b89a2f86957ebbe2584ff87754b2','Draw',NULL),('0c33b89a2f86957ebbe2584ff87754b2','Estoril',2),('282fed58a147325e5b0afffcaa1a0e87','Arouca',17),('282fed58a147325e5b0afffcaa1a0e87','Draw',10),('282fed58a147325e5b0afffcaa1a0e87','FC Porto',1),('3374a5219c3d6f050bd3109903b679c4','Chaves',2),('3374a5219c3d6f050bd3109903b679c4','Draw',3),('3374a5219c3d6f050bd3109903b679c4','Famalicão',3),('873b384613f3e472f7f6078760d66f5c','Casa Pia',3),('873b384613f3e472f7f6078760d66f5c','Draw',3),('873b384613f3e472f7f6078760d66f5c','Portimonense',2),('923f451c2663e29d50cdb0027ab20ea7','Benfica',1),('923f451c2663e29d50cdb0027ab20ea7','Braga',3),('923f451c2663e29d50cdb0027ab20ea7','Draw',3),('94f9a296ef2f0a2f72553baf8b79741b','Draw',3),('94f9a296ef2f0a2f72553baf8b79741b','Gil Vicente',2),('94f9a296ef2f0a2f72553baf8b79741b','Santa Clara',3),('e913fe08c63882e6675a3137d2aa2260','Draw',3),('e913fe08c63882e6675a3137d2aa2260','Vitória SC',3),('e913fe08c63882e6675a3137d2aa2260','Vizela',2),('ec2f72299349bba6d9e7e979d0e7d6d8','CS Maritimo',3),('ec2f72299349bba6d9e7e979d0e7d6d8','Draw',3),('ec2f72299349bba6d9e7e979d0e7d6d8','Rio Ave FC',2),('f03db53acb1492a8930663127323502e','Draw',7),('f03db53acb1492a8930663127323502e','Pacos de Ferreira',17),('f03db53acb1492a8930663127323502e','Sporting Lisbon',1);
+INSERT INTO `Odds` VALUES ('01f7c8123fe4ab268ddf4d90bf22bcae','Benfica',1),('01f7c8123fe4ab268ddf4d90bf22bcae','Draw',4),('01f7c8123fe4ab268ddf4d90bf22bcae','Santa Clara',8),('0c33b89a2f86957ebbe2584ff87754b2','Boavista Porto',3),('0c33b89a2f86957ebbe2584ff87754b2','Draw',NULL),('0c33b89a2f86957ebbe2584ff87754b2','Estoril',2),('0d660333cea680040744c67e9cd77534','Casa Pia',34),('0d660333cea680040744c67e9cd77534','Draw',29),('0d660333cea680040744c67e9cd77534','Estoril',1),('282fed58a147325e5b0afffcaa1a0e87','Arouca',17),('282fed58a147325e5b0afffcaa1a0e87','Draw',10),('282fed58a147325e5b0afffcaa1a0e87','FC Porto',1),('3374a5219c3d6f050bd3109903b679c4','Chaves',2),('3374a5219c3d6f050bd3109903b679c4','Draw',3),('3374a5219c3d6f050bd3109903b679c4','Famalicão',3),('44ef1caee7739164c7e52a771a658b4c','Draw',4),('44ef1caee7739164c7e52a771a658b4c','FC Porto',1),('44ef1caee7739164c7e52a771a658b4c','Vitória SC',7),('522b83747b682421bde9063e6d923cc9','Draw',3),('522b83747b682421bde9063e6d923cc9','Famalicão',2),('522b83747b682421bde9063e6d923cc9','Rio Ave FC',3),('52937650c1f4edbce02009268a033498','Draw',5),('52937650c1f4edbce02009268a033498','Sporting Lisbon',1),('52937650c1f4edbce02009268a033498','Vizela',10),('59d90eb97cea82f8adb63799b09a6e07','Boavista Porto',2),('59d90eb97cea82f8adb63799b09a6e07','Chaves',3),('59d90eb97cea82f8adb63799b09a6e07','Draw',3),('7fc7f4e73a187a777be3954f758e9577','Draw',3),('7fc7f4e73a187a777be3954f758e9577','Gil Vicente',5),('7fc7f4e73a187a777be3954f758e9577','Vitória SC',1),('873b384613f3e472f7f6078760d66f5c','Casa Pia',3),('873b384613f3e472f7f6078760d66f5c','Draw',3),('873b384613f3e472f7f6078760d66f5c','Portimonense',2),('8b300830a0ebd20cee78596230305039','CS Maritimo',2),('8b300830a0ebd20cee78596230305039','Draw',3),('8b300830a0ebd20cee78596230305039','Estoril',2),('8f1568cea6b0d4db20ef3bb0aaa54f61','Braga',1),('8f1568cea6b0d4db20ef3bb0aaa54f61','Draw',4),('8f1568cea6b0d4db20ef3bb0aaa54f61','Pacos de Ferreira',6),('923f451c2663e29d50cdb0027ab20ea7','Benfica',1),('923f451c2663e29d50cdb0027ab20ea7','Braga',3),('923f451c2663e29d50cdb0027ab20ea7','Draw',3),('93e4f30c5f066fd35e1fbce9fac715c1','Casa Pia',2),('93e4f30c5f066fd35e1fbce9fac715c1','Draw',3),('93e4f30c5f066fd35e1fbce9fac715c1','Gil Vicente',3),('94f9a296ef2f0a2f72553baf8b79741b','Draw',3),('94f9a296ef2f0a2f72553baf8b79741b','Gil Vicente',2),('94f9a296ef2f0a2f72553baf8b79741b','Santa Clara',3),('94f9f4d2245188d30d7429ddad9178b1','Arouca',27),('94f9f4d2245188d30d7429ddad9178b1','Chaves',17),('94f9f4d2245188d30d7429ddad9178b1','Draw',1),('ad72eab7e549220ad0907a783a3c6b77','Benfica',12),('ad72eab7e549220ad0907a783a3c6b77','Draw',8),('ad72eab7e549220ad0907a783a3c6b77','Sporting Lisbon',28),('bce78d6897dc1da6e3bbda794b0751ca','Arouca',2),('bce78d6897dc1da6e3bbda794b0751ca','Draw',3),('bce78d6897dc1da6e3bbda794b0751ca','Portimonense',3),('be6439e02cf1993457751f2e4e6c1d74','Draw',29),('be6439e02cf1993457751f2e4e6c1d74','Famalicão',34),('be6439e02cf1993457751f2e4e6c1d74','FC Porto',1),('e913fe08c63882e6675a3137d2aa2260','Draw',3),('e913fe08c63882e6675a3137d2aa2260','Vitória SC',3),('e913fe08c63882e6675a3137d2aa2260','Vizela',2),('ec2f72299349bba6d9e7e979d0e7d6d8','CS Maritimo',3),('ec2f72299349bba6d9e7e979d0e7d6d8','Draw',3),('ec2f72299349bba6d9e7e979d0e7d6d8','Rio Ave FC',2),('f03db53acb1492a8930663127323502e','Draw',8),('f03db53acb1492a8930663127323502e','Pacos de Ferreira',17),('f03db53acb1492a8930663127323502e','Sporting Lisbon',1);
 /*!40000 ALTER TABLE `Odds` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -371,4 +398,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-04 20:36:30
+-- Dump completed on 2023-01-18 10:56:48
